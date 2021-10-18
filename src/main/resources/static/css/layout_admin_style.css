@@ -1,0 +1,44 @@
+@charset "UTF-8";
+
+@font-face {
+	src : url("../fonts/NIXGONFONTS L 2.0.ttf");
+	font-family: "nixgon";
+}
+
+@font-face {
+    font-family: 'ELAND_Nice_M';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/ELAND_Nice_M.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ELAND_CHOICE_B';
+    src: url("../fonts/ELAND 초이스 B.ttf");
+}
+
+.font-nixgon {font-family: "nixgon";}
+.font-ELAND-CHOICE {font-family: "ELAND_CHOICE_B";}
+.font-ELAND-NICE {font-family: "ELAND_Nice_M";}
+
+/* admin_login view */
+#logo img {width: 13em;}
+.contents_1 #navMenu {margin-right: 120px; font-size: 1.7rem}
+.contents_1 #sign {font-size: 1.4rem; display: inline;}
+
+.contents_1 #signInInput {margin-top: 3em;}
+.contents_1 #signInInput #idBox, #pwBox {height: 2.5em;}
+
+
+/* admin nav */
+.contents {margin-top: 2.5%;}
+#leftNav {background-color: #f2e8d5;}
+#leftNav li {margin-top: 15%;}
+#leftNav li a {color: black;}
+
+/* admin/menu_update_view */
+#menuChangeBox {width: 70%}
+.type-change-box label {width: 20%;}
+.type-change-box select {width: 30%;}
+.type-change-box button {width: 5%;}
+
