@@ -69,9 +69,10 @@
 			$('.modal-body').append('<div class="input-group"><input type="text" class="form-control"><button type="button" class="btn btn-danger modal-del-btn">삭제</button></div>');
 			
 		});
-			$('.modal-del-btn').on('click', function() {
-				$(this).parent('div').remove();
-			});
+		
+		$(document).on('click', '.modal-del-btn', function() {
+			$(this).parent('div').remove();
+		});
 		
 	});
 </script>
