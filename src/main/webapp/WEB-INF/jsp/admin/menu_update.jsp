@@ -46,12 +46,12 @@
       	<c:forEach items="${menuTypeList}" var="menuType">
       	<div class="input-group">
 	        <input type="text" class="form-control" value="${menuType}">
-	        <button type="button" class="btn btn-danger" class="modalDelBtn">삭제</button>
+	        <button type="button" class="btn btn-danger modal-del-btn">삭제</button>
        	</div>
         </c:forEach>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="exitModal">닫기</button>
         <button type="button" class="btn btn-primary" id="modalSaveBtn">저장</button>
       </div>
     </div>
@@ -60,8 +60,18 @@
 
 <script>
 	$(document).ready(function() {
-		$('#modalAddBtn').on('click', function() {
-			$('.modal-body').
+		
+		$('#exitModal').on('click', function() {
+			location.reload(true);
 		});
+		
+		$('#modalAddBtn').on('click', function() {
+			$('.modal-body').append('<div class="input-group"><input type="text" class="form-control"><button type="button" class="btn btn-danger modal-del-btn">삭제</button></div>');
+			
+		});
+			$('.modal-del-btn').on('click', function() {
+				$(this).parent('div').remove();
+			});
+		
 	});
 </script>
