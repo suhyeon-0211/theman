@@ -2,11 +2,92 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.theman.menu.dao.MenuDAO">
-	<select id="getType" resultType="String">
+	<select id="getType" resultType="com.theman.menu.model.ServiceType">
 		SELECT
-			`type`
+			`id`
+			,`type`
 		FROM
-			`service`
-		GROUP BY `type`
+			`service_type`
 	</select>
+	
+	<delete id="deleteMenuType">
+		DELETE
+		FROM
+			`service_type`
+		WHERE
+			<foreach collection="list" item="item" separator="or">
+				`id` = #{item}
+			</foreach>
+	</delete>
+	
+	<insert id="insertMenuType" parameterType="java.util.List">
+		INSERT INTO `service_type`
+		(`type`)
+		VALUES
+		<foreach collection="list" item="item" separator=",">
+		(#{item})
+		</foreach>
+	</insert>
+	
+	<insert id="insertSpecificMenu" parameterType="map" >
+		INSERT INTO `service_specific`
+		(
+			`typeId`
+			, `specificType`
+			, `price`
+			, `requiredTime`
+		)
+		VALUES
+		(
+			#{typeId}
+			, #{specificType}
+			, #{price}
+			, #{requiredTime}
+		)
+	</insert>
+	
+	<select id="selectMenu" resultType="com.theman.menu.model.Menu">
+		SELECT
+			a.`id`
+		    , b.`type`
+		    , a.`specificType`
+		    , a.`price`
+		    , a.`requiredTime`
+		FROM
+			`service_specific` as a
+		INNER JOIN
+			`service_type` as b
+		ON
+			a.`typeId` = b.`id`;
+	</select>
+	
+	<delete id="deleteSpecificMenu">
+		DELETE
+		FROM
+			`service_specific`
+		WHERE
+			`id` = #{id}
+	</delete>
+	
+	<delete id="deleteSpecificMenuByTypeId">
+		DELETE
+		FROM
+			`service_specific`
+		WHERE
+			<foreach collection="list" item="item" separator="or">
+				`typeId` = #{item}
+			</foreach>
+	</delete>
+	
+	<update id="updateSpecificMenu" parameterType="map">
+		UPDATE `service_specific`
+		SET
+			`typeId` = #{typeId}
+			, `specificType` = #{specificType}
+			, `price` = #{price}
+			, `requiredTime` = #{requiredTime}
+			, `updatedAt` = NOW()
+		WHERE
+			`id` = #{id}
+	</update>
 </mapper>

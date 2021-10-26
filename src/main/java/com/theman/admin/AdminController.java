@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.theman.admin.bo.AdminBO;
+import com.theman.menu.model.Menu;
+import com.theman.menu.model.ServiceType;
 
 @RequestMapping("/admin")
 @Controller
@@ -35,9 +37,11 @@ public class AdminController {
 	
 	@RequestMapping("/menu_update_view")
 	public String menuUpdateView(Model model) {
-		List<String> menuTypeList = adminBO.getMenuType();
+		List<ServiceType> menuTypeList = adminBO.getMenuType();
+		List<Menu> menuList = adminBO.getMenu();
 		
 		model.addAttribute("menuTypeList", menuTypeList);
+		model.addAttribute("menuList", menuList);
 		model.addAttribute("viewName", "admin/menu_update");
 		return "template/layout_admin";
 	}

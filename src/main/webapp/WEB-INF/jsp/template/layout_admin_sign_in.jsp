@@ -36,17 +36,15 @@
 			</div>
 
 			<div class="d-flex justify-content-center align-items-center" id="signInInput">
-				<div class="w-50 d-flex justify-content-center">
-					<div>
+				<div class="w-100 d-flex justify-content-center">
+					<div class="w-50" id="inputBox">
 						<div class="input-group" id="idBox">
-							<span class="input-group-text col-2">ID</span>
-							<input type="text" id="loginId" class="form-control" placeholder="아이디를 입력하세요">
+							<input type="text" id="loginId" class="form-control" placeholder="아이디">
 						</div>
 						<div class="input-group" id="pwBox">
-							<span class="input-group-text col-2">PW</span>
-							<input type="password" id="password" class="form-control" placeholder="비밀번호를 입력하세요">
+							<input type="password" id="password" class="form-control" placeholder="비밀번호">
 						</div>
-						<button type="button" class="btn btn-success w-100 mt-3" id="signInBtn">로그인</button>
+						<button type="button" class="btn w-100 mt-3" id="signInBtn">로그인</button>
 					</div>
 				</div>
 			</div>

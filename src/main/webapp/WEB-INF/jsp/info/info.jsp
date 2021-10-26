@@ -203,7 +203,7 @@
 		var mapContainer = document.getElementById('map');
 		var options = {
 				center : new kakao.maps.LatLng(37.5335599, 126.715615),
-				level : 3
+				level : 2
 		};
 		var map = new kakao.maps.Map(mapContainer, options);
 		// 지도에 마커 표시

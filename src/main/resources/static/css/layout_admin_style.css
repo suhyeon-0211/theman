@@ -27,7 +27,9 @@
 .contents_1 #sign {font-size: 1.4rem; display: inline;}
 
 .contents_1 #signInInput {margin-top: 3em;}
-.contents_1 #signInInput #idBox, #pwBox {height: 2.5em;}
+.contents_1 #signInInput #idBox, #pwBox {height: 3em; margin-top: 1.3em; border: thin solid;}
+.contents_1 #signInInput #signInBtn {background-color: #f2e8d5;}
+.contents_1 #signInInput #inputBox {padding-left: 15%; padding-right: 15%;}
 
 
 /* admin nav */
@@ -35,10 +37,30 @@
 #leftNav {background-color: #f2e8d5;}
 #leftNav li {margin-top: 15%;}
 #leftNav li a {color: black;}
+#leftNav li a:hover {font-weight: bold;}
 
 /* admin/menu_update_view */
 #menuChangeBox {width: 70%}
-.type-change-box label {width: 20%;}
-.type-change-box select {width: 30%;}
-.type-change-box button {width: 5%;}
+#menuChangeBox .type-change-box label {width: 20%;}
+#menuChangeBox .type-change-box select {width: 30%;}
+#menuChangeBox .type-change-box button {width: 5%;}
+.contents #menu #specificMenu {width: 80%;}
+.contents #menu #specificMenus {padding-left: 5%; padding-right: 5%; padding-top: 5%; padding-bottom: 5%;}
+.contents #menu #specificMenu .specific-menu-introduce{font-family: "nixgon"; font-size: 1.4rem;}
+.contents #menu #specificMenu h3, h5 {font-family: "ELAND_CHOICE_B"; font-size: 1.8rem;}
+.modal-body .type-change-box label {width: 30%;}
 
+/* admin reservation check */
+.contents #reservationCheckBox {width: 80%;}
+.contents #reservationCheckBox button {background-color: white; padding: 1em;}
+.contents #reservationCheckBox button:hover {background-color: #f2e8d5;}
+.contents #datePick {width: 40%; height: 20em; border: medium solid;}
+.contents #datePick #date {height: 15em; overflow: auto;}
+.contents #detailPick {width: 40%; height: 20em; border: medium solid;}
+.contents #detailPick #detail {height: 15em; overflow: auto;}
+.contents #datePick #dateTitle {background-color: #131313;}
+.contents #datePick #dateTitle h1 {color: white;}
+.contents #detailPick #detailTitle {background-color: #f2e8d5;}
+.contents #detailPick #detailTitle h1 {color: black;}
+.contents table {width: 50%;}
+.contents table th {background-color: #131313; color: white;}

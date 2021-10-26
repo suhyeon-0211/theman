@@ -17,7 +17,7 @@
 <body>
 	<div>
 		<div class="d-flex">
-			<nav id="leftNav" class="col-2">
+			<nav id="leftNav" class="col-2 font-nixgon">
 				<jsp:include page="../include/nav.jsp"/>
 			</nav>
 			<section class="contents w-100">
