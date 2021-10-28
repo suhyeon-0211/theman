@@ -207,7 +207,7 @@
 			}
 			
 			if (isNaN(typeId) || isNaN(price) || isNaN(requiredTime)) {
-				alert("가격과 걸리는시간은 정수를 입력해야합니다.");
+				alert("가격과 걸리는시간은 숫자를 입력해야합니다.");
 				return;
 			}
 			

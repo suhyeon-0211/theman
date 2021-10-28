@@ -19,19 +19,6 @@ public class AdminRestController {
 	@Autowired
 	private AdminBO adminBO;
 	
-	@PostMapping("/sign_in")
-	public Map<String, Object> signIn(
-			@RequestParam("loginId") String loginId,
-			@RequestParam("password") String password) {
-		Map<String, Object> result = new HashMap<>();
-		result.put("result", "fail");
-		if(adminBO.isCorrectIdAndPassword(loginId, password)) {
-			result.put("result", "success");
-		}
-		
-		return result;
-	}
-	
 	@PostMapping("/menu_type_update")
 	public Map<String, Object> menuTypeUpdate(
 			@RequestParam("menuList[]") List<String> menuList) {

@@ -18,11 +18,6 @@ public class AdminController {
 	@Autowired
 	private AdminBO adminBO;
 	
-	@RequestMapping("/sign_in_view")
-	public String signInView() {
-		return "template/layout_admin_sign_in";
-	}
-	
 	@RequestMapping("/reservation_check_view")
 	public String reservationCheckView(Model model) {
 		model.addAttribute("viewName", "admin/reservation_check");

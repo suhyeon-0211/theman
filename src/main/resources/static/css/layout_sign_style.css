@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+@font-face {
+	src : url("../fonts/NIXGONFONTS L 2.0.ttf");
+	font-family: "nixgon";
+}
+
+@font-face {
+    font-family: 'ELAND_Nice_M';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/ELAND_Nice_M.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ELAND_CHOICE_B';
+    src: url("../fonts/ELAND 초이스 B.ttf");
+}
+
+.font-nixgon {font-family: "nixgon";}
+.font-ELAND-CHOICE {font-family: "ELAND_CHOICE_B";}
+.font-ELAND-NICE {font-family: "ELAND_Nice_M";}
+
+/* admin_login view */
+
+.contents #signInInput {margin-top: 3em;}
+.contents #signInInput #idBox, #pwBox {height: 3em; margin-top: 1.3em; border: thin solid;}
+.contents #signInInput #signInBtn {background-color: #f2e8d5;}
+.contents #signInInput #signUpBtn {background-color: #f2e8d5;}
+.contents #signInInput #inputBox {padding-left: 15%; padding-right: 15%;}
