@@ -46,4 +46,8 @@ public class MenuBO {
 	public void updateSpecificMenu(int id, int typeId, String specificMenu, int price, int requiredTime) {
 		menuDAO.updateSpecificMenu(id, typeId, specificMenu, price, requiredTime);
 	}
+	
+	public Menu getMenuById(int id) {
+		return menuDAO.selectMenuById(id);
+	}
 }

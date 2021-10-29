@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.theman.reservation.dao.ReservationDAO">
+	<insert id="insertReservation" parameterType="map">
+		INSERT INTO `reservation`
+		(
+			`serviceId`
+			,`reservationDateTime`
+			,`name`
+			,`phoneNumber`
+			,`reservationPassword`
+			,`status`
+			,`createdAt`
+			,`updatedAt`
+		)
+		VALUES
+		(
+			#{serviceId}
+			,#{reservationDateTime}
+			,#{name}
+			,#{phoneNumber}
+			,#{reservationPassword}
+			,"예약완료"
+			,NOW()
+			,NOW()
+		)
+	</insert>
+	
+	<select id="selectReservationListByPhoneNumberAndReservationPassword" parameterType="map" resultType="com.theman.reservation.model.Reservation">
+		SELECT
+			`id`
+			,`serviceId`
+			,`reservationDateTime`
+			,`name`
+			,`phoneNumber`
+			,`reservationPassword`
+			,`status`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`reservation`
+		WHERE
+			`phoneNumber` = #{phoneNumber}
+			AND `reservationPassword` = #{reservationPassword}
+	</select>
+</mapper>

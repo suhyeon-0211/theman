@@ -16,6 +16,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(interceptor)
 		.addPathPatterns("/**")	//	/**	손주를 포함한 모든 디렉토리 확인
-		.excludePathPatterns("/user/sign_out", "/static/**", "/error");	// 인터셉터를 안태울 path 설정
+		.excludePathPatterns("/reservation/sign_in**", "/static/**", "/error");	// 인터셉터를 안태울 path 설정
 	}
 }

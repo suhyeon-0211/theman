@@ -27,4 +27,5 @@ public interface MenuDAO {
 			@Param("specificType") String specificType,
 			@Param("price") int price,
 			@Param("requiredTime") int requiredTime);
+	public Menu selectMenuById(int id);
 }

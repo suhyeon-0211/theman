@@ -25,10 +25,10 @@
 	<div class="content2">
 		<h1 class="font-ELAND-NICE">예약 확인</h1>
 		<div class="input-group font-nixgon my-2">
-			<input type="text" class="form-control" placeholder="전화번호">
+			<input type="text" class="form-control" id="checkPhoneNumber" placeholder="전화번호">
 		</div>
 		<div class="input-group font-nixgon my-2">
-			<input type="text" class="form-control" placeholder="비밀번호">
+			<input type="text" class="form-control" id="checkPassword" placeholder="비밀번호">
 		</div>
 		<button type="button" class="font-nixgon btn w-100" id="reservationCheckBtn">로그인</button>
 	</div>
@@ -84,6 +84,10 @@
 					alert("비회원 로그인에 실패했습니다. 관리자에게 문의해주세요");
 				}
 			});
+		});
+		
+		$('#reservationCheckBtn').on('click', function() {
+			
 		});
 	});
 </script>

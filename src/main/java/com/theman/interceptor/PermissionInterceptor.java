@@ -24,17 +24,17 @@ public class PermissionInterceptor implements HandlerInterceptor {
 		
 		// 세션을 가져온다
 		HttpSession session = request.getSession();
-		Integer userId = (Integer) session.getAttribute("userId");
+		String name = (String) session.getAttribute("name");
 		
 		// URL path를 가져온다.
 		String uri = request.getRequestURI();
 		
-		/*
-		 * if (userId != null && uri.startsWith("/user")) { // 만약 로그인이 되어 있으면 + /user =>
-		 * post쪽으로 보낸다. response.sendRedirect("/info"); return false; } else if (userId
-		 * == null && uri.startsWith("/admin")) { // 만약 로그인이 안되어 있으면 + /post -> user쪽으로
-		 * 보낸다. response.sendRedirect("/info"); return false; }
-		 */
+		if (name == null && uri.startsWith("/reservation")) { 
+			// 만약 로그인이 되어 있지않고 + /reservation/**=> /reservation/sign_in_view 쪽으로 보낸다. 
+			response.sendRedirect("/reservation/sign_in_view"); 
+			return false; 
+		}
+		
 		
 		return true;
 	}

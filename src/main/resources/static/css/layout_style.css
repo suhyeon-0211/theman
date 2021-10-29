@@ -80,7 +80,7 @@ header #navMenu {margin-right: 70px; font-size: 0.9rem;}
 .contents #timePick #timeTitle h1 {color: white;}
 .contents #reservateBtn {background-color: white; font-size: 2.5rem;}
 .contents #reservateBtn:hover {font-weight: bold;}
-.contents #reservationStatusBox {margin-left: 5em;}
+.contents #reservationStatusBox {font-size: 1.5em;}
 
 .contents #reservationCheckBox table {width: 80%;}
 .contents #reservationCheckBox table th {background-color: #131313; color: white;}
@@ -130,7 +130,7 @@ footer img {width: 20%;}
 	.contents #timePick {width: 30%; height: 35em; border: medium solid;}
 	.contents #reservateBtn {background-color: white; font-size: 2.5rem;}
 	.contents #reservateBtn:hover {font-weight: bold;}
-	.contents #reservationStatusBox {margin-left: 0em;}
+	.contents #reservationStatusBox {font-size: 2em;}
 	
 	.contents #reservationCheckBox table {width: 50%;}
 	.contents #reservationCancelBtn {background-color: white; font-size: 2.5rem;}

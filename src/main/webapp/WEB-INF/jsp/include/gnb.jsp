@@ -11,7 +11,8 @@
 		<ul class="nav d-flex justify-content-center">
 			<li class="nav-item"><a class="nav-link text-dark" href="/info">Info</a></li>
 			<li class="nav-item"><a class="nav-link text-dark" href="/menu">Menu</a></li>
-			<li class="nav-item"><a class="nav-link text-dark" href="/reservation/sign_in_view">Reservation</a></li>
+			<li class="nav-item"><a class="nav-link text-dark" href="/reservation">Reservation</a></li>
+			<li class="nav-item"><a class="nav-link text-dark" href="/reservation/check_view">Reservation Check</a></li>
 		</ul>
 	</nav>
 	<div id="sign">

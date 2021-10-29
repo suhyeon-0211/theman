@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,12 +16,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.theman.menu.bo.MenuBO;
 import com.theman.menu.model.Menu;
 import com.theman.menu.model.ServiceType;
+import com.theman.reservation.bo.ReservationBO;
+import com.theman.reservation.model.ReservationCheck;
 
 @Controller
 public class ReservationController {
 
 	@Autowired
 	private MenuBO menuBO;
+	
+	@Autowired
+	private ReservationBO reservationBO;
 	
 	@RequestMapping("/reservation/sign_in_view")
 	public String reservationSignInView(Model model) {
@@ -60,7 +68,13 @@ public class ReservationController {
 	}
 	
 	@RequestMapping("/reservation/check_view")
-	public String reservationCheckView(Model model) {
+	public String reservationCheckView(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String phoneNumber = (String) session.getAttribute("phoneNumber");
+		String reservationPassword = (String) session.getAttribute("reservationPassword");
+		List<ReservationCheck> reservationCheckList = reservationBO.getReservationCheckListByPhoneNumberAndReservationPassword(phoneNumber, reservationPassword);
+		
+		model.addAttribute("reservationCheckList", reservationCheckList);
 		model.addAttribute("viewName", "reservation/reservation_check");
 		return "template/layout";
 	}

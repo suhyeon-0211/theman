@@ -90,4 +90,21 @@
 		WHERE
 			`id` = #{id}
 	</update>
+	
+	<select id="selectMenuById" resultType="com.theman.menu.model.Menu">
+		SELECT
+			a.`id`
+		    , b.`type`
+		    , a.`specificType`
+		    , a.`price`
+		    , a.`requiredTime`
+		FROM
+			`service_specific` as a
+		INNER JOIN
+			`service_type` as b
+		ON
+			a.`typeId` = b.`id`
+		WHERE
+			a.`id` = #{id}
+	</select>
 </mapper>
