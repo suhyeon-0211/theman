@@ -191,7 +191,8 @@
 			}
 			
 			let menuId = $(this).data('menu-id');
-						
+			time = time.substring(0,5);
+			date = date.substring(0,10);
 			$.ajax({
 				type: 'post'
 				, url: '/reservation/create'

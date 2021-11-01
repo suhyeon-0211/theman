@@ -4,6 +4,8 @@
 
 <script>
 	$(document).ready(function() {
+		
+		
 		var calendarEl = $('#calendar')[0];
 		// full-calendar 생성하기
 		var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -19,9 +21,24 @@
 			eventRemove: function(obj){ // 이벤트가 삭제되면 발생하는 이벤트
 				console.log(obj);
 			},
+			eventSources: [{
+				events: function(info, successCallback, failureCallback) {
+					$.ajax({
+						type: 'post'
+						, url: '/admin/holiday/select'
+						, success: function(data) {
+							successCallback(data);
+						}
+						, error : function(e) {
+							alert("휴무 로딩에 실패하였습니다.");
+						}
+					});
+				}
+			}],
 			select: function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
 				if (confirm('휴무로 지정 또는 해제하시겠습니까?')) {
-					let event = calendar.getEventById(arg.startStr)
+					let event = calendar.getEventById(arg.startStr);
+					console.log("arg.startStr : "+ arg.startStr)
 					if(event == null) {
 						calendar.addEvent({
 							id: arg.startStr,

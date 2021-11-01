@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.theman.admin.bo.AdminBO;
+import com.theman.admin.model.CalendarVO;
 
 @RequestMapping("/admin")
 @RestController
@@ -69,5 +70,10 @@ public class AdminRestController {
 		Map<String, Object> result = new HashMap<>();
 		result.put("result", "success");
 		return result;
+	}
+	
+	@PostMapping("/holiday/select")
+	public List<CalendarVO> selectHolidayList() {
+		return adminBO.getHolidayList();
 	}
 }

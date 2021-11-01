@@ -46,7 +46,7 @@ public class ReservationController {
 		Calendar hour = Calendar.getInstance();
 		hour.set(Calendar.HOUR, 550);
 		hour.set(Calendar.MINUTE, 0);
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 15; i++) {
 			dateList.add(sdf1.format(day.getTime()));
 			day.add(Calendar.DATE, 1);
 			String st1 = sdf2.format(hour.getTime());

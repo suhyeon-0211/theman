@@ -41,7 +41,7 @@ public class ReservationRestController {
 		
 		// date 가공 -> String date 와 time 을 합쳐 dateTime 만들기
 		String dateTime = date + " " + time;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd일 HH:mm분");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm");
 		Date localDate = sdf.parse(dateTime);
 		
 		// db insert

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.theman.admin.model.CalendarVO;
+import com.theman.holiday.bo.HolidayBO;
 import com.theman.menu.bo.MenuBO;
 import com.theman.menu.model.Menu;
 import com.theman.menu.model.ServiceType;
@@ -16,6 +18,9 @@ public class AdminBO {
 	
 	@Autowired
 	private MenuBO menuBO;
+	
+	@Autowired
+	private HolidayBO holidayBO;
 	
 	public boolean isCorrectIdAndPassword(String loginId, String password) {
 		String standardId = "admin";
@@ -65,7 +70,6 @@ public class AdminBO {
 		if (!menuList.isEmpty()) {
 			menuBO.insertMenuType(menuList);
 		}
-		
 	}
 	
 	public void insertSpecificMenu(int typeId, String specificType, int price, int requiredTime) {
@@ -78,6 +82,10 @@ public class AdminBO {
 	
 	public void updateSpecificMenu(int id, int typeId, String specificType, int price, int requiredTime) {
 		menuBO.updateSpecificMenu(id, typeId, specificType, price, requiredTime);
+	}
+	
+	public List<CalendarVO> getHolidayList() {
+		return holidayBO.getHolidayList();
 	}
 	
 }
