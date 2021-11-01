@@ -19,7 +19,9 @@
 		<c:if test="${not empty name}">
 			<span class="font-nixgon">${name}님 환영합니다.</span>
 			<a href="/user/sign_out" class="text-dark font-nixgon">로그아웃</a>
+			<c:if test="${name eq 'admin' }">
 			<a href="/admin/reservation_check_view" class="text-dark font-nixgon">관리화면으로</a>
+			</c:if>
 		</c:if>
 		<c:if test="${empty name}">
 			<a href="/user/sign_in_view" class="text-dark font-nixgon">로그인</a>

@@ -8,5 +8,4 @@
 		FROM
 			`review`
 	</select>
-
 </mapper>

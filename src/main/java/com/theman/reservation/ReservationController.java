@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.theman.menu.bo.MenuBO;
@@ -39,7 +40,7 @@ public class ReservationController {
 		// 오늘부터 앞으로 10일까지의 날짜 리스트에 담는다.
 		List<String> dateList = new ArrayList<>();
 		List<String> hourList = new ArrayList<>();
-		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy.MM.dd");
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy.MM.dd (EEE)");
 		SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm");
 		Calendar day = Calendar.getInstance();
 		Calendar hour = Calendar.getInstance();
@@ -73,9 +74,12 @@ public class ReservationController {
 		String phoneNumber = (String) session.getAttribute("phoneNumber");
 		String reservationPassword = (String) session.getAttribute("reservationPassword");
 		List<ReservationCheck> reservationCheckList = reservationBO.getReservationCheckListByPhoneNumberAndReservationPassword(phoneNumber, reservationPassword);
-		
+		if (!CollectionUtils.isEmpty(reservationCheckList)) {
+			session.setAttribute("name", reservationCheckList.get(0).getReservation().getName());		
+		}
 		model.addAttribute("reservationCheckList", reservationCheckList);
 		model.addAttribute("viewName", "reservation/reservation_check");
 		return "template/layout";
 	}
+	
 }

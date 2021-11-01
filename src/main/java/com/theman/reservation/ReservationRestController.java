@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.theman.reservation.bo.ReservationBO;
+import com.theman.reservation.model.ReservationTimeStatus;
 
 @RequestMapping("/reservation")
 @RestController
@@ -42,8 +44,6 @@ public class ReservationRestController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd일 HH:mm분");
 		Date localDate = sdf.parse(dateTime);
 		
-		System.out.println(sdf.format(localDate));
-		
 		// db insert
 		reservationBO.insertReservation(menuId, localDate, name, phoneNumber, reservationPassword);
 		
@@ -54,11 +54,11 @@ public class ReservationRestController {
 	}
 	
 	@PutMapping("/update")
-	public Map<String, Object> reservationUpdate(
-			@RequestParam("reservationDate") Date reservationDate,
-			@RequestParam("name") String name,
-			@RequestParam("phoneNumber") String phoneNumber,
-			@RequestParam("reservationPassword") String reservationPassword) {
+	public Map<String, Object> reservationUpdate(@RequestParam("reservationId") int reservationId, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String name = (String) session.getAttribute("name");
+		
+		reservationBO.updateReservationStatusById(reservationId, name);
 		
 		Map<String, Object> result = new HashMap<>();
 		result.put("result", "success");
@@ -82,4 +82,27 @@ public class ReservationRestController {
 		return result;
 	}
 	
+	@PostMapping("/check")
+	public Map<String, Object> reservationCheck(
+			@RequestParam("phoneNumber") String phoneNumber,
+			@RequestParam("reservationPassword") String reservationPassword,
+			HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.setAttribute("phoneNumber", phoneNumber);
+		session.setAttribute("reservationPassword", reservationPassword);
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("result", "success");
+		return result;
+	}
+	
+	@PostMapping("/status")
+	public Map<String, Object> reservationCheck(@RequestParam("date") String date) throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd (EEE)");
+		Date targetDate = sdf.parse(date);
+		List<ReservationTimeStatus> reservationTimeStatusList = reservationBO.getReservationTimeStatusListByDate(targetDate);
+		Map<String, Object> result = new HashMap<>();
+		result.put("result", reservationTimeStatusList);
+		return result;
+	}
 }

@@ -9,20 +9,7 @@
 				<h1 class="text-center font-ELAND-NICE">날짜</h1>
 			</div>
 			<div id="date" class="font-nixgon">
-				<button type="button" class="btn d-inline-block w-100">10월 24일</button>
-				<button type="button" class="btn d-inline-block w-100">10월 24일</button>
-				<button type="button" class="btn d-inline-block w-100">10월 24일</button>
-				<button type="button" class="btn d-inline-block w-100">10월 24일</button>
-				<button type="button" class="btn d-inline-block w-100">10월 24일</button>
-				<button type="button" class="btn d-inline-block w-100">10월 24일</button>
-				<button type="button" class="btn d-inline-block w-100">10월 24일</button>
-				<button type="button" class="btn d-inline-block w-100">10월 24일</button>
-				<button type="button" class="btn d-inline-block w-100">10월 24일</button>
-				<button type="button" class="btn d-inline-block w-100">10월 24일</button>
-				<button type="button" class="btn d-inline-block w-100">10월 24일</button>
-				<button type="button" class="btn d-inline-block w-100">10월 24일</button>
-				<button type="button" class="btn d-inline-block w-100">10월 24일</button>
-				<button type="button" class="btn d-inline-block w-100">10월 24일</button>
+				<input type="text" class="form-control" id="datepicker">
 			</div>
 		</div>
 		<div id="detailPick" class="mx-2">
@@ -79,3 +66,9 @@
 		</table>
 	</div>
 </div>
+
+<script>
+	$(document).ready(function() {
+		$('#datepicker').datepicker();
+	});
+</script>

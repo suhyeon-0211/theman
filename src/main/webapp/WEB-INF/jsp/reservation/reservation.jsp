@@ -13,7 +13,9 @@
 			</div>
 			<div id="date" class="font-nixgon">
 				<c:forEach items="${dateList}" var="date">
-				<button type="button" class="btn d-inline-block w-100 datePickBtn">${date}</button>
+					<c:if test="${!fn:contains(date, '화')}">
+					<button type="button" class="btn d-inline-block w-100 datePickBtn">${date}</button>
+					</c:if>
 				</c:forEach>
 			</div>
 		</div>
@@ -32,16 +34,11 @@
 						<div id="${type.type}" class="d-none">
 							<c:forEach items="${menuList}" var="menu">
 								<c:if test="${menu.type eq type.type}">
-									<button type="button" class="btn d-inline-block w-100 specificTypeBtn" data-type-name="${type.type}" data-menu-id="${menu.id}">${menu.specificType}</button>
+									<button type="button" class="btn d-inline-block w-100 specificTypeBtn" data-type-name="${type.type}" data-menu-id="${menu.id}" data-menu-required-time="${menu.requiredTime}">${menu.specificType} - ${menu.requiredTime}분</button>
 								</c:if>
 							</c:forEach>
 						</div>
 					</c:forEach>				
-					<%-- <div>
-						<c:forEach items="${menuList}" var="menu">
-						<button type="button" class="btn d-inline-block w-100">${menu.specificType}</button>
-						</c:forEach>
-					</div> --%>
 				</div>
 			</div>
 		</div>
@@ -51,10 +48,18 @@
 			</div>
 			<div class="font-nixgon" id="hourBox">
 				<c:forEach items="${hourList}" var="hour">
-				<div class="d-flex">
-					<button type="button" class="btn d-inline-block w-50 timeBtn">${fn:split(hour, '/') [0]}</button>
-					<button type="button" class="btn d-inline-block w-50 timeBtn">${fn:split(hour, '/') [1]}</button>
-				</div>
+					<c:if test="${not empty reservationCheckListByDate}">
+						<c:forEach items="${reservationCheckListByDate}" var="reservationCheck">
+							<fmt:formatDate value="${reservationCheck.reservation.reservationDateTime}" pattern="HH:mm" var="date"/>
+							<c:if test="${date eq fn:split(hour, '/') [0]}"></c:if>
+						</c:forEach>
+					</c:if>
+					<c:if test="${empty reservationCheckListByDate}">
+						<div class="d-flex">
+							<button type="button" class="btn d-inline-block w-50 timeBtn" data-button-status="first">${fn:split(hour, '/') [0]}</button>
+							<button type="button" class="btn d-inline-block w-50 timeBtn" data-button-status="second">${fn:split(hour, '/') [1]}</button>
+						</div>
+					</c:if>
 				</c:forEach>
 			</div>
 		</div>
@@ -72,11 +77,51 @@
 <script>
 	$(document).ready(function() {
 		$('.datePickBtn').on('click', function() {
-			console.log($(this).text());
-			$('#dateSpan').text($(this).text() + "일");
+			// 선택된 날짜, 메뉴, 시간의 배경색 초기화
+			$('#datePick').find('button').removeAttr('style');
+		    $('#menuPick').find('button').removeAttr('style');
+			$('#timePick').find('button').removeAttr('style');
+			$('#timePick').find('button').removeAttr('disabled');
+			// 클릭시 현재 선택된 요소 배경색 변경
+			$(this).css({'background-color' : '#f2e8d5'})
+			// 선택된 요소의 값을 아래 요약에 표시 + 메뉴와 시간 초기화
+			let date = $(this).text();
+			$('#dateSpan').text(date);
+			$('#menuSpan').text('');
+			$('#timeSpan').text('');
+			$.ajax({
+				type : 'post'
+				, url : '/reservation/status'
+				, data : {'date' : date}
+				, success : function(data) {
+					if (data.result != '') {
+						// 여기부터 다시
+						for (let reservationResult of data.result) {
+							for (let i = 0; i < 20; i++) {
+								if ($('#timePick button:eq('+ i + ')').text() == reservationResult.time) {
+									let index = 0;
+									for (let j = 0; j < reservationResult.requiredTime; j+=30) {
+										$('#timePick button:eq('+ (i + index) + ')').attr('disabled', 'disabled');
+										index++;
+									}
+								}
+							}
+						}
+					}
+					$('#timePick').find('button[disabled!=disabled]').css({'background-color': 'white'});
+				}
+				, error : function(e) {
+					alert('관리자에게 문의해주세요');
+				}
+			});
 		});
 		
 		$('.typeBtn').on('click', function() {
+			//선택된 메뉴, 시간 배경색 초기화
+			$('#menuPick').find('button').removeAttr('style');
+			$('#timePick').find('button').removeAttr('style');
+			// 현재 선택된 요소의 배경색 변경
+			$(this).css({'background-color' : '#f2e8d5'})
 			let type = $(this).text();
 			console.log(type);
 			$('#' + type).siblings('div').addClass('d-none');
@@ -84,14 +129,48 @@
 		});
 		
 		$('.specificTypeBtn').on('click', function() {
+			//선택된 메뉴, 시간 배경색 초기화
+			$('#specificTypePick').find('button').removeAttr('style');
+			$('#timePick').find('button').removeAttr('style');
+			// 현재 선택된 요소의 배경색 변경
+			$(this).css({'background-color' : '#f2e8d5'})
 			let typeName = $(this).data('type-name');
 			let menuId = $(this).data('menu-id');
 			$('#reservateBtn').data('menu-id', menuId);
 			$('#menuSpan').text(typeName + ' - ' + $(this).text());
+			$('#hourBox').data('menu-required-time', $(this).data('menu-required-time'));
+			//$('#hourBox').find('button').css({'background-color': 'white'})
 		});
 		
 		$('.timeBtn').on('click', function() {
-			$('#timeSpan').text($(this).text() + "분");
+			//$('#hourBox').find('button').css({'background-color': 'transparent'})
+			$('#timePick').find('button').removeAttr('style');
+			let menuSpan = $('#menuSpan').text().trim();
+			if (menuSpan == '') {
+				alert("상세메뉴부터 선택해주세요");
+				return;
+			}
+			let requiredTime = $('#hourBox').data('menu-required-time');
+			let timeStack = new Array();
+			let target = $(this);
+			let index = 0;
+			for (let i = 0; i < requiredTime; i+=30) {
+				timeStack[index++] = target.text();
+				if (target.attr('disabled') == 'disabled') {
+					alert("선택할 수 없는 시간대 입니다. 비어있는 시간대를 선택해주세요");
+					$('#timePick').find('button').removeAttr('style');
+					return;
+				}
+				target.css({'background-color' : '#f2e8d5'});
+				if (target.data('button-status') == 'second') {
+					target = target.parent().next().children('button:eq(0)');
+				} else {
+					target = target.next();
+				}
+			}
+			timeStack[index] = target.text();
+			$('#timeSpan').text(timeStack[0] + "분 ~ " + timeStack[timeStack.length-1] + "분");
+			
 		});
 		
 		$('#reservateBtn').on('click', function() {
@@ -112,7 +191,6 @@
 			}
 			
 			let menuId = $(this).data('menu-id');
-			console.log(menuId);
 						
 			$.ajax({
 				type: 'post'

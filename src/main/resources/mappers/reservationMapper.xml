@@ -27,6 +27,30 @@
 		)
 	</insert>
 	
+	<update id="updateReservationStatusById">
+		UPDATE `reservation`
+		SET
+			`status` = "예약취소"
+			, `updatedAt` = NOW()
+		WHERE
+			`id` = #{id}
+	</update>
+	
+	<insert id="insertReservationCancelLog">
+		INSERT INTO `reservation_cancel_log`
+		(
+			`reservationId`
+			,`isAdmin`
+			,`createdAt`
+		)
+		VALUES
+		(
+			#{id}
+			,#{isAdmin}
+			,NOW()	
+		)	
+	</insert>
+	
 	<select id="selectReservationListByPhoneNumberAndReservationPassword" parameterType="map" resultType="com.theman.reservation.model.Reservation">
 		SELECT
 			`id`
@@ -43,5 +67,22 @@
 		WHERE
 			`phoneNumber` = #{phoneNumber}
 			AND `reservationPassword` = #{reservationPassword}
+	</select>
+	
+	<select id="selectReservationListByDate" parameterType="date" resultType="com.theman.reservation.model.Reservation">
+		SELECT
+			`id`
+			,`serviceId`
+			,`reservationDateTime`
+			,`name`
+			,`phoneNumber`
+			,`reservationPassword`
+			,`status`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`reservation`
+		WHERE
+			date_format(reservationDateTime, '%y-%m-%d') = date_format(#{date}, '%y-%m-%d')
 	</select>
 </mapper>

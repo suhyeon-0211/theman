@@ -87,7 +87,35 @@
 		});
 		
 		$('#reservationCheckBtn').on('click', function() {
+			let phoneNumber = $('#checkPhoneNumber').val().trim();
+			if (phoneNumber == '') {
+				alert("전화번호를 입력해주세요");
+				return;
+			}
+			let reservationPassword = $("#checkPassword").val().trim();
+			if (reservationPassword == '') {
+				alert("예약 비밀번호를 입력해주세요");
+				return;
+			}
 			
+			$.ajax({
+				type: "post"
+				, url: '/reservation/check'
+				, data: {
+					'phoneNumber' : phoneNumber
+					, 'reservationPassword' : reservationPassword
+				}
+				, success : function(data) {
+					if (data.result == 'success') {
+						location.href="/reservation/check_view";
+					} else {
+						alert("예약확인에 실패했습니다. 다시 시도해주세요");
+					}
+				}
+				, error : function(e) {
+					alert("예약확인에 실패했습니다. 관리자에게 문의해주세요");
+				}
+			});
 		});
 	});
 </script>

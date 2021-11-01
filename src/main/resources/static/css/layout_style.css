@@ -65,6 +65,7 @@ header #navMenu {margin-right: 70px; font-size: 0.9rem;}
 
 .contents #reservationBox {width: 80%;}
 .contents #reservationBox button {background-color: white; padding: 1em; color: #131313;}
+.contents #reservationBox button:disabled {background-color: gray;}
 .contents #reservationBox button:hover {background-color: #f2e8d5;}
 .contents #datePick {width: 100%; height: 35em; border: medium solid;}
 .contents #datePick #date {height: 30em; overflow: auto;}
