@@ -35,7 +35,7 @@
 					});
 				}
 			}],
-			select: function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
+			/* select: function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
 				if (confirm('휴무로 지정 또는 해제하시겠습니까?')) {
 					let event = calendar.getEventById(arg.startStr);
 					console.log("arg.startStr : "+ arg.startStr)
@@ -52,6 +52,41 @@
 					} else {
 						event.remove();
 					}
+				}
+				calendar.unselect();
+			}, */
+			dateClick: function(info) {
+				if (confirm('휴무로 지정 또는 해제하시겠습니까?')) {
+					$.ajax({
+						type: 'post'
+						, url: '/admin/holiday/update'
+						, data: {'date' : info.date}
+						, success : function(data) {
+							if (data.result == 'success') {
+								location.reload(true);
+							} else {
+								alert("다시 시도해주세요");
+							}
+						}
+						, error: function() {
+							alert("관리자에게 문의해주세요");
+						}
+					})
+					
+					/* let event = calendar.getEventById(info.startStr);
+					console.log("arg.startStr : "+ info.startStr);
+					if (event == null) {
+						calendar.addEvent({
+							id: info.startStr,
+							title: '휴무',
+							start: info.date,
+							allDay: info.allDay,
+							display: 'background',
+							backgroundColor: '#FE2E64'
+						})
+					} else {
+						event.remove();
+					} */
 				}
 				calendar.unselect();
 			}

@@ -1,6 +1,7 @@
 package com.theman.admin.bo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,6 +87,16 @@ public class AdminBO {
 	
 	public List<CalendarVO> getHolidayList() {
 		return holidayBO.getHolidayList();
+	}
+	
+	public void updateHoliday(Date targetDate) {
+		if(holidayBO.existHolidayByCloseDate(targetDate)) {
+			//삭제
+			holidayBO.deleteHolidayByCloseDate(targetDate);
+		} else {
+			//추가
+			holidayBO.insertHoliday(targetDate);
+		}
 	}
 	
 }

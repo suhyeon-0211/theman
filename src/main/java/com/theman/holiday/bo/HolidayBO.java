@@ -24,10 +24,21 @@ public class HolidayBO {
 		for (Date date : dateList) {
 			CalendarVO calendar = new CalendarVO();
 			calendar.setStart(date);
-			calendar.setEnd(date);
 			calendar.setId(sdf.format(date));
 			holidayList.add(calendar);
 		}
 		return holidayList;
+	}
+	
+	public boolean existHolidayByCloseDate(Date targetDate) {
+		return holidayDAO.existHolidayByCloseDate(targetDate);
+	}
+	
+	public void deleteHolidayByCloseDate(Date targetDate) {
+		holidayDAO.deleteHolidayByCloseDate(targetDate);
+	}
+	
+	public void insertHoliday(Date targetDate) {
+		holidayDAO.insertHoliday(targetDate);
 	}
 }

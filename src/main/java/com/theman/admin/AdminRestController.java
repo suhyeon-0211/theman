@@ -1,5 +1,6 @@
 package com.theman.admin;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,5 +76,16 @@ public class AdminRestController {
 	@PostMapping("/holiday/select")
 	public List<CalendarVO> selectHolidayList() {
 		return adminBO.getHolidayList();
+	}
+	
+	@PostMapping("/holiday/update")
+	public Map<String, Object> holidayUpdate(@RequestParam("date") Date targetDate) {
+		
+		// db update
+		adminBO.updateHoliday(targetDate);
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("result", "success");
+		return result;
 	}
 }

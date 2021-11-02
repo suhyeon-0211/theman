@@ -8,4 +8,32 @@
 		FROM
 			`holiday`
 	</select>
+	
+	<select id="existHolidayByCloseDate" parameterType="java.util.Date" resultType="boolean">
+		SELECT
+			count(1)
+		FROM
+			`holiday`
+		WHERE
+			date_format(`closeDate`, '%y-%m-%d') = date_format(#{targetDate}, '%y-%m-%d')
+	</select>
+	
+	<delete id="deleteHolidayByCloseDate" parameterType="java.util.Date">
+		DELETE
+		FROM
+			`holiday`
+		WHERE
+			date_format(`closeDate`, '%y-%m-%d') = date_format(#{targetDate}, '%y-%m-%d')
+	</delete>
+	
+	<insert id="insertHoliday" parameterType="java.util.Date">
+		INSERT INTO `holiday`
+		(
+			`closeDate`
+		)
+		VALUES
+		(
+			#{targetDate}
+		)
+	</insert>
 </mapper>
