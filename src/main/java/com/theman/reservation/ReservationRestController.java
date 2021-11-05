@@ -57,8 +57,8 @@ public class ReservationRestController {
 	public Map<String, Object> reservationUpdate(@RequestParam("reservationId") int reservationId, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String name = (String) session.getAttribute("name");
-		
-		reservationBO.updateReservationStatusById(reservationId, name);
+		String status = "예약취소";
+		reservationBO.updateReservationStatusById(reservationId, name, status);
 		
 		Map<String, Object> result = new HashMap<>();
 		result.put("result", "success");

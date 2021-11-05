@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <div class="d-flex justify-content-center">
 	<div class="d-flex justify-content-center" id="reservationCheckBox">
 		<div id="datePick" class="mx-2">
@@ -14,18 +16,23 @@
 		</div>
 		<div id="detailPick" class="mx-2">
 			<div id="detailTitle">
-				<h1 class="text-center font-ELAND-NICE">메뉴</h1>
+				<h1 class="text-center font-ELAND-NICE">예약자 확인</h1>
 			</div>
 			<div id="detail" class="font-nixgon">
+				<c:if test="${not empty reservationCheckList}">
+				<c:forEach items="${reservationCheckList}" var="reservationCheck">
+					<fmt:formatDate value="${reservationCheck.reservation.reservationDateTime}" pattern="HH:mm" var="date"/>
+					<button type="button" class="btn d-inline-block w-100 reservation-detail-btn" data-reservation-id="${reservationCheck.reservation.id}">${date} - ${reservationCheck.reservation.name}</button>
+				</c:forEach>
+				</c:if>
+				<!-- <button type="button" class="btn d-inline-block w-100">10월 24일</button>
 				<button type="button" class="btn d-inline-block w-100">10월 24일</button>
 				<button type="button" class="btn d-inline-block w-100">10월 24일</button>
 				<button type="button" class="btn d-inline-block w-100">10월 24일</button>
 				<button type="button" class="btn d-inline-block w-100">10월 24일</button>
 				<button type="button" class="btn d-inline-block w-100">10월 24일</button>
 				<button type="button" class="btn d-inline-block w-100">10월 24일</button>
-				<button type="button" class="btn d-inline-block w-100">10월 24일</button>
-				<button type="button" class="btn d-inline-block w-100">10월 24일</button>
-				<button type="button" class="btn d-inline-block w-100">10월 24일</button>
+				<button type="button" class="btn d-inline-block w-100">10월 24일</button> -->
 			</div>
 		</div>
 	</div>
@@ -34,33 +41,33 @@
 <div class="my-5">
 	<h1 class="text-center font-ELAND-NICE">예약상세</h1>
 	<div class="d-flex justify-content-center">
-		<table class="table font-nixgon border text-center">
+		<table class="table font-nixgon border text-center font-weight-bold">
 			<tr>
 				<th>이름</th>
-				<td class="text-left">아무개</td>
+				<td class="text-left" id="nameTb"></td>
 			</tr>
 			<tr>
 				<th>전화번호</th>
-				<td class="text-left">01012341234</td>
+				<td class="text-left" id="phoneNumberTb"></td>
 			</tr>
 			<tr>
 				<th>예약메뉴</th>
-				<td class="text-left">컷트(기본)</td>
+				<td class="text-left" id="reservationMenuTb"></td>
 			</tr>
 			<tr>
 				<th>예약일시</th>
-				<td class="text-left">2021-10-22(금), 11:30</td>
+				<td class="text-left" id="reservationDateTimeTb"></td>
 			</tr>
 			<tr>
 				<th>예약현황</th>
 				<td class="text-left d-flex">
-					<select class="form-control">
-						<option>1</option>
-						<option>2</option>
-						<option>3</option>
-						<option>4</option>
+					<select class="form-control" id="reservationStatus">
+						<option>예약완료</option>
+						<option>예약취소</option>
+						<option>보류</option>
+						<option>노쇼</option>
 					</select>
-					<button type="button" class="btn">적용</button>
+					<button type="button" class="btn" id="submitReservationStatusBtn">적용</button>
 				</td>
 			</tr>
 		</table>
@@ -69,10 +76,11 @@
 
 <script>
 	$(document).ready(function() {
+		
 		$('#datepicker').datepicker({
-			showOn: "both", // 버튼과 텍스트 필드 모두 캘린더를 보여준다. 
+			//showOn: "both", // 버튼과 텍스트 필드 모두 캘린더를 보여준다. 
 			//buttonImage: "/application/db/jquery/images/calendar.gif", // 버튼 이미지 
-			buttonImageOnly: true, // 버튼에 있는 이미지만 표시한다. 
+			//buttonImageOnly: true, // 버튼에 있는 이미지만 표시한다. 
 			changeMonth: true, // 월을 바꿀수 있는 셀렉트 박스를 표시한다. 
 			changeYear: true, // 년을 바꿀 수 있는 셀렉트 박스를 표시한다. 
 			nextText: '다음 달', // next 아이콘의 툴팁. 
@@ -91,7 +99,53 @@
 		
 		$('#datepicker').on('change', function() {
 			let date = $(this).val();
+			location.href="/admin/reservation_check_view?date="+date;
+		});
 		
-		})
+		$('.reservation-detail-btn').on('click', function() {
+			let reservationId = $(this).data('reservation-id');
+			
+			$.ajax({
+				type: 'post'
+				, url: '/admin/reservation_detail'
+				, data: {'reservationId' : reservationId}
+				, success: function(data) {
+					$('#nameTb').text(data.reservationDetail.reservation.name);
+					$('#phoneNumberTb').text(data.reservationDetail.reservation.phoneNumber);
+					$('#reservationMenuTb').text(data.reservationDetail.menu.type + "(" + data.reservationDetail.menu.specificType + ")");
+					$('#reservationDateTimeTb').text(data.reservationDetail.dateStr + ", " + data.reservationDetail.requiredTimeStr);
+					$('#reservationStatus option').each(function() {
+						if($(this).val() == data.reservationDetail.reservation.status) {
+							$(this).prop('selected', true);
+						}
+					});
+					$('#submitReservationStatusBtn').data('reservation-id', data.reservationDetail.reservation.id);
+				}
+				, error: function(e) {
+					alert("다시 시도해주세요");
+				}
+			});
+		});
+		
+		$('#submitReservationStatusBtn').on('click', function() {
+			let reservationId = $(this).data('reservation-id');
+			let status = $('#reservationStatus option:selected').val();
+			alert(status);
+			$.ajax({
+				type: 'post'
+				, url: '/admin/reservation_update'
+				, data: {'reservationId' : reservationId, 'status' : status}
+				, success : function(data) {
+					if (data.result == 'success') {
+						location.reload(true);
+					} else {
+						alert("다시 시도해주세요")
+					}
+				}
+				, error : function(e) {
+					alert("관리자에게 문의해주세요");
+				}
+			})
+		});
 	});
 </script>

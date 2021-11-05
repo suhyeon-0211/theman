@@ -2,8 +2,11 @@ package com.theman.reservation.bo;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +16,7 @@ import com.theman.menu.model.Menu;
 import com.theman.reservation.dao.ReservationDAO;
 import com.theman.reservation.model.Reservation;
 import com.theman.reservation.model.ReservationCheck;
+import com.theman.reservation.model.ReservationDetail;
 import com.theman.reservation.model.ReservationTimeStatus;
 
 @Service
@@ -28,13 +32,15 @@ public class ReservationBO {
 		reservationDAO.insertReservation(serviceId, reservationDateTime, name, phoneNumber, reservationPassword);
 	}
 	
-	public void updateReservationStatusById(int reservationId, String name) {
+	public void updateReservationStatusById(int reservationId, String name, String status) {
 		boolean isAdmin = false;
 		if (name.equals("admin")) {
 			isAdmin = true;
 		}
-		reservationDAO.updateReservationStatusById(reservationId);
-		reservationDAO.insertReservationCancelLog(reservationId, isAdmin);
+		reservationDAO.updateReservationStatusById(reservationId, status);
+		if (status.equals("예약취소")) {
+			reservationDAO.insertReservationCancelLog(reservationId, isAdmin);
+		}
 	}
 	public List<ReservationCheck> getReservationCheckListByPhoneNumberAndReservationPassword(String phoneNumber, String reservationPassword) {
 		List<Reservation> reservationList = reservationDAO.selectReservationListByPhoneNumberAndReservationPassword(phoneNumber, reservationPassword);
@@ -83,5 +89,49 @@ public class ReservationBO {
 			reservationTimeStatusList.add(tempReservation);
 		}
 		return reservationTimeStatusList;
+	}
+	
+	public Reservation getReservationById(int id) {
+		return reservationDAO.selectReservationById(id);
+	}
+	
+	public ReservationDetail getReservationDetailById(int id) {
+		
+		Reservation reservation = getReservationById(id);
+		
+		ReservationDetail reservationDetail = new ReservationDetail();
+		reservationDetail.setReservation(reservation);
+		reservationDetail.setMenu(menuBO.getMenuById(reservation.getServiceId()));
+		
+		SimpleDateFormat sdf1 = new SimpleDateFormat("HH:mm");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd(EEE)");
+		Date date = reservationDetail.getReservation().getReservationDateTime();
+		reservationDetail.setDateStr(sdf2.format(date));
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		
+		String reservationDateTimeStr = sdf1.format(date);
+		
+		List<String> timeList = new ArrayList<>();
+		for (int i = 0; i < reservationDetail.getMenu().getRequiredTime(); i+= 30) {
+			calendar.add(Calendar.MINUTE, 30);
+			timeList.add(sdf1.format(calendar.getTime()));
+		}
+		reservationDateTimeStr = reservationDateTimeStr + " ~ " + timeList.get(timeList.size() - 1);
+		reservationDetail.setRequiredTimeStr(reservationDateTimeStr);
+		return reservationDetail;
+	}
+	
+	public Map<Integer, List<ReservationTimeStatus>> getReservationCheckListByThisWeek() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DATE, 2-calendar.get(Calendar.DAY_OF_WEEK));
+		Map<Integer, List<ReservationTimeStatus>> reservationTimeStatusMap = new HashMap<>();
+		for(int i = 0; i < 7; i++) {
+			Date targetDate = calendar.getTime();
+			List<ReservationTimeStatus> reservationTimeStatusList = getReservationTimeStatusListByDate(targetDate);
+			reservationTimeStatusMap.put(i, reservationTimeStatusList);
+			calendar.add(Calendar.DATE, 1);
+		}
+		return reservationTimeStatusMap;
 	}
 }

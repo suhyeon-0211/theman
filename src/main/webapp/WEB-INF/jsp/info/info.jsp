@@ -32,13 +32,15 @@
 	<div class=" justify-content-center d-lg-flex">
 		<div class="status-margin">
 			<h3 class="weekday-font">월</h3>
-				<div class="weekday p-3">
+				<div class="weekday p-3" id="0">
 					<span class="sharp-time">10:00</span>
 					<span>10:30</span><br>
 					<span class="sharp-time">11:00</span>
 					<span>11:30</span><br>
 					<span class="sharp-time">12:00</span>
 					<span>12:30</span><br>
+					<span class="sharp-time">13:00</span>
+					<span>13:30</span><br>
 					<span class="sharp-time">14:00</span>
 					<span>14:30</span><br>
 					<span class="sharp-time">15:00</span>
@@ -55,13 +57,15 @@
 			</div>
 			<div class="status-margin">
 				<h3 class="weekday-font">수</h3>
-				<div class="weekday p-3">
+				<div class="weekday p-3 wednesday" id="2">
 					<span class="sharp-time">10:00</span>
 					<span>10:30</span><br>
 					<span class="sharp-time">11:00</span>
 					<span>11:30</span><br>
 					<span class="sharp-time">12:00</span>
 					<span>12:30</span><br>
+					<span class="sharp-time">13:00</span>
+					<span>13:30</span><br>
 					<span class="sharp-time">14:00</span>
 					<span>14:30</span><br>
 					<span class="sharp-time">15:00</span>
@@ -78,13 +82,15 @@
 			</div>
 			<div class="status-margin">
 				<h3 class="weekday-font">목</h3>
-				<div class="weekday p-3">
+				<div class="weekday p-3 thursday" id="3">
 					<span class="sharp-time">10:00</span>
 					<span>10:30</span><br>
 					<span class="sharp-time">11:00</span>
 					<span>11:30</span><br>
 					<span class="sharp-time">12:00</span>
 					<span>12:30</span><br>
+					<span class="sharp-time">13:00</span>
+					<span>13:30</span><br>
 					<span class="sharp-time">14:00</span>
 					<span>14:30</span><br>
 					<span class="sharp-time">15:00</span>
@@ -101,13 +107,15 @@
 			</div>
 			<div class="status-margin">
 				<h3 class="weekday-font">금</h3>
-				<div class="weekday p-3">
+				<div class="weekday p-3 friday" id="4">
 					<span class="sharp-time">10:00</span>
 					<span>10:30</span><br>
 					<span class="sharp-time">11:00</span>
 					<span>11:30</span><br>
 					<span class="sharp-time">12:00</span>
 					<span>12:30</span><br>
+					<span class="sharp-time">13:00</span>
+					<span>13:30</span><br>
 					<span class="sharp-time">14:00</span>
 					<span>14:30</span><br>
 					<span class="sharp-time">15:00</span>
@@ -124,13 +132,15 @@
 			</div>
 			<div class="status-margin">
 				<h3 class="holiday-font">토</h3>
-				<div class="holiday p-3">
+				<div class="holiday p-3 saturday" id="5">
 					<span class="sharp-time">10:00</span>
 					<span>10:30</span><br>
 					<span class="sharp-time">11:00</span>
 					<span>11:30</span><br>
 					<span class="sharp-time">12:00</span>
 					<span>12:30</span><br>
+					<span class="sharp-time">13:00</span>
+					<span>13:30</span><br>
 					<span class="sharp-time">14:00</span>
 					<span>14:30</span><br>
 					<span class="sharp-time">15:00</span>
@@ -147,13 +157,15 @@
 			</div>
 			<div class="status-margin">
 				<h3 class="holiday-font">일</h3>
-				<div class="holiday p-3">
+				<div class="holiday p-3 sunday" id="6">
 					<span class="sharp-time">10:00</span>
 					<span>10:30</span><br>
 					<span class="sharp-time">11:00</span>
 					<span>11:30</span><br>
 					<span class="sharp-time">12:00</span>
 					<span>12:30</span><br>
+					<span class="sharp-time">13:00</span>
+					<span>13:30</span><br>
 					<span class="sharp-time">14:00</span>
 					<span>14:30</span><br>
 					<span class="sharp-time">15:00</span>
@@ -222,6 +234,37 @@
 		// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
 		var zoomControl = new kakao.maps.ZoomControl();
 		map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+		
+		$(document).ready(function() {
+			$.ajax({
+				type: 'get'
+				, url: '/info/select'
+				, success: function(data) {
+					if (data.result != '') {
+						console.log(data.reservationTimeStatus);
+						for (let i = 0; i < 7; i++) {
+							for (let reservationResult of data.reservationTimeStatus[i]) {
+								for (let j = 0; j < 20; j++) {
+									if ($('#' + i + ' span:eq('+ j + ')').text() == reservationResult.time) {
+										console.log($('#' + i + ' span:eq('+ j + ')').text() + "first");
+										let index = 0;
+										for (let z = 0; z < reservationResult.requiredTime; z+=30) {
+											console.log($('#' + i + ' span:eq('+ (j + index) + ')').text() + "second");
+											$('#' + i + ' span:eq('+ (j + index) + ')').css('color', '#f26457');
+											index++;
+										}
+									}
+								}
+							}
+						}
+						
+					}
+				}
+				, error: function(e) {
+					alert("로드 실패 관리자에게 문의해주세요");
+				}
+			});
+		});
 	</script>
 </div>
 			

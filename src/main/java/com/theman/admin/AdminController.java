@@ -1,15 +1,19 @@
 package com.theman.admin;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.mysql.cj.util.StringUtils;
 import com.theman.admin.bo.AdminBO;
 import com.theman.menu.model.Menu;
 import com.theman.menu.model.ServiceType;
+import com.theman.reservation.model.ReservationCheck;
 
 @RequestMapping("/admin")
 @Controller
@@ -19,7 +23,12 @@ public class AdminController {
 	private AdminBO adminBO;
 	
 	@RequestMapping("/reservation_check_view")
-	public String reservationCheckView(Model model) {
+	public String reservationCheckView(Model model,
+			@RequestParam(value="date", required = false) String date) throws ParseException {
+		if (!StringUtils.isNullOrEmpty(date)) {
+			List<ReservationCheck> reservationCheckList = adminBO.getReservationCheckListByDate(date);
+			model.addAttribute("reservationCheckList", reservationCheckList);
+		}
 		model.addAttribute("viewName", "admin/reservation_check");
 		return "template/layout_admin";
 	}

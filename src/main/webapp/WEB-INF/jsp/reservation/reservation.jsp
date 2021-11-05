@@ -48,12 +48,12 @@
 			</div>
 			<div class="font-nixgon" id="hourBox">
 				<c:forEach items="${hourList}" var="hour">
-					<c:if test="${not empty reservationCheckListByDate}">
+					<%-- <c:if test="${not empty reservationCheckListByDate}">
 						<c:forEach items="${reservationCheckListByDate}" var="reservationCheck">
 							<fmt:formatDate value="${reservationCheck.reservation.reservationDateTime}" pattern="HH:mm" var="date"/>
 							<c:if test="${date eq fn:split(hour, '/') [0]}"></c:if>
 						</c:forEach>
-					</c:if>
+					</c:if> --%>
 					<c:if test="${empty reservationCheckListByDate}">
 						<div class="d-flex">
 							<button type="button" class="btn d-inline-block w-50 timeBtn" data-button-status="first">${fn:split(hour, '/') [0]}</button>
@@ -95,7 +95,6 @@
 				, data : {'date' : date}
 				, success : function(data) {
 					if (data.result != '') {
-						// 여기부터 다시
 						for (let reservationResult of data.result) {
 							for (let i = 0; i < 20; i++) {
 								if ($('#timePick button:eq('+ i + ')').text() == reservationResult.time) {

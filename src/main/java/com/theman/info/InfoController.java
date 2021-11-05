@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.theman.menu.bo.MenuBO;
 import com.theman.menu.model.Menu;
 import com.theman.menu.model.ServiceType;
+import com.theman.reservation.bo.ReservationBO;
 
 @Controller
 public class InfoController {

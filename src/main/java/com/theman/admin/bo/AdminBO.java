@@ -1,5 +1,7 @@
 package com.theman.admin.bo;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +15,9 @@ import com.theman.holiday.bo.HolidayBO;
 import com.theman.menu.bo.MenuBO;
 import com.theman.menu.model.Menu;
 import com.theman.menu.model.ServiceType;
+import com.theman.reservation.bo.ReservationBO;
+import com.theman.reservation.model.ReservationCheck;
+import com.theman.reservation.model.ReservationDetail;
 
 @Service
 public class AdminBO {
@@ -22,6 +27,9 @@ public class AdminBO {
 	
 	@Autowired
 	private HolidayBO holidayBO;
+	
+	@Autowired
+	private ReservationBO reservationBO;
 	
 	public boolean isCorrectIdAndPassword(String loginId, String password) {
 		String standardId = "admin";
@@ -99,4 +107,17 @@ public class AdminBO {
 		}
 	}
 	
+	public List<ReservationCheck> getReservationCheckListByDate(String dateStr) throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date targetDate = sdf.parse(dateStr);
+		return reservationBO.getReservationCheckListByDate(targetDate);
+	}
+	
+	public ReservationDetail getReservationDetailById(int id) {
+		return reservationBO.getReservationDetailById(id);
+	}
+	
+	public void updateReservationStatus(int id, String name, String status) {
+		reservationBO.updateReservationStatusById(id, name, status);
+	}
 }

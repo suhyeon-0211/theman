@@ -33,6 +33,7 @@ public class UserRestController {
 		if(adminBO.isCorrectIdAndPassword(loginId, password)) {
 			result.put("result", "success");
 			session.setAttribute("name", "admin");
+			session.setAttribute("phoneNumber", "0000");
 		}
 		
 		return result;

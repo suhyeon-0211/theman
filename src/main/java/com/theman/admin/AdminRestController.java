@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.theman.admin.bo.AdminBO;
 import com.theman.admin.model.CalendarVO;
+import com.theman.reservation.model.ReservationDetail;
 
 @RequestMapping("/admin")
 @RestController
@@ -83,6 +87,31 @@ public class AdminRestController {
 		
 		// db update
 		adminBO.updateHoliday(targetDate);
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("result", "success");
+		return result;
+	}
+	
+	@PostMapping("/reservation_detail")
+	public Map<String, Object> getReservationDetail(
+			@RequestParam("reservationId") int id) {
+		ReservationDetail reservationDetail = adminBO.getReservationDetailById(id);
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("reservationDetail", reservationDetail);
+		return result;
+	}
+	
+	@PostMapping("/reservation_update") 
+	public Map<String, Object> updateReservation(
+			@RequestParam("reservationId") int id,
+			@RequestParam("status") String status,
+			HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String name = (String) session.getAttribute("name");
+		
+		adminBO.updateReservationStatus(id, name, status);
 		
 		Map<String, Object> result = new HashMap<>();
 		result.put("result", "success");
