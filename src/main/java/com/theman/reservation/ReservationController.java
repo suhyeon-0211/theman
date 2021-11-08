@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.theman.holiday.bo.HolidayBO;
 import com.theman.menu.bo.MenuBO;
 import com.theman.menu.model.Menu;
 import com.theman.menu.model.ServiceType;
@@ -28,6 +29,9 @@ public class ReservationController {
 	
 	@Autowired
 	private ReservationBO reservationBO;
+	
+	@Autowired
+	private HolidayBO holidayBO;
 	
 	@RequestMapping("/reservation/sign_in_view")
 	public String reservationSignInView(Model model) {
@@ -47,7 +51,9 @@ public class ReservationController {
 		hour.set(Calendar.HOUR, 550);
 		hour.set(Calendar.MINUTE, 0);
 		for (int i = 0; i < 15; i++) {
-			dateList.add(sdf1.format(day.getTime()));
+			if (!holidayBO.existHolidayByCloseDate(day.getTime())) {
+				dateList.add(sdf1.format(day.getTime()));
+			}
 			day.add(Calendar.DATE, 1);
 			String st1 = sdf2.format(hour.getTime());
 			hour.add(Calendar.MINUTE, 30);
@@ -59,6 +65,8 @@ public class ReservationController {
 		// 메뉴 리스트 가져오기
 		List<ServiceType> typeList = menuBO.getType();
 		List<Menu> menuList = menuBO.getMenu();
+		
+		// 휴무 리스트 가져오기
 		
 		model.addAttribute("dateList", dateList);
 		model.addAttribute("hourList", hourList);

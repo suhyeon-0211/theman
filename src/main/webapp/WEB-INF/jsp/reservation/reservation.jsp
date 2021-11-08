@@ -13,9 +13,7 @@
 			</div>
 			<div id="date" class="font-nixgon">
 				<c:forEach items="${dateList}" var="date">
-					<c:if test="${!fn:contains(date, '화')}">
 					<button type="button" class="btn d-inline-block w-100 datePickBtn font-weight-bold">${date}</button>
-					</c:if>
 				</c:forEach>
 			</div>
 		</div>
@@ -119,6 +117,9 @@
 		});
 		
 		$('.typeBtn').on('click', function() {
+			// 이전에 선택되었던 메뉴 초기화
+			$('#menuSpan').text('');
+			$('#timeSpan').text('');
 			//선택된 메뉴, 시간 배경색 초기화
 			$('#menuPick').find('button').removeAttr('style');
 			$('#timePick').find('button').removeAttr('style');
