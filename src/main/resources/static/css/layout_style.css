@@ -21,12 +21,15 @@
 .font-ELAND-CHOICE {font-family: "ELAND_CHOICE_B";}
 .font-ELAND-NICE {font-family: "ELAND_Nice_M";}
 
-header img {width: 5em;}
-header #navMenu {margin-right: 70px; font-size: 0.9rem;}
+header img {width: 100%;}
+header #pc {display: none;}
+header #mobile {display: block;}
+header #mobile a, header #mobile span {font-size: 1rem;}
+
 /* info */
 .contents #centerLogo {background-color: #f2e8d5; height: 20em;}
 .contents #centerLogo img {width: 350px;}
-.contents #centerLogo #toReservation {background-color: #071c59; width: 25%; height: 20%; margin-top: 40px;}
+.contents #centerLogo #toReservation, #toReservationCheckView {background-color: #071c59; width: 25%; height: 20%; margin-top: 40px;}
 .contents #introduce {background-color: #131313;}
 .contents #introduce #smallLogo img {width: 20%;}
 .contents #introduce #text small {font-family: "ELAND_CHOICE_B"; color: #8c623e;}
@@ -46,7 +49,7 @@ header #navMenu {margin-right: 70px; font-size: 0.9rem;}
 .contents #reservationStatus span {font-family: "nixgon"; font-size: 1.4rem;}
 .contents #reservationStatus #toReservation {background-color: #071c59; width: 30%; margin-top: 20px; font-family: "ELAND_nice_M";}
 .contents #reservationStatus .sharp-time {margin-right: 5px;}
-.contents #reservationStatus small {font-family: "nixgon";}
+.contents #reservationStatus small {font-family: "nixgon"; color: #f26457; font-size: 1.5rem}
 .contents #direction {background-color: #131313; padding-top: 3%;}
 .contents #direction #map {width: 300px; height: 300px; display: none;}
 .contents #direction #introductionOfStore {color: #f2e8d5;}
@@ -93,12 +96,15 @@ footer img {width: 20%;}
 
 @media (min-width: 992px) {
 	header img {width: 13em;}
-	header #navMenu {margin-right: 120px; font-size: 1.7rem}
+	header #navMenu {font-size: 1.7rem;}
 	header #sign {font-size: 1.4rem; display: inline;}
+	header #pc {display: block;}
+	header #mobile {display: none;}
+	
 	/* info */
 	.contents #centerLogo {background-color: #f2e8d5; height: 30em;}
 	.contents #centerLogo img {width: 600px;}
-	.contents #centerLogo #toReservation {background-color: #071c59; width: 25%; height: 20%; margin-top: 40px}
+	.contents #centerLogo #toReservation, #toReservationCheckView {background-color: #071c59; width: 25%; height: 20%; margin-top: 40px}
 	.contents #introduce {background-color: #131313; height: 500px}
 	.contents #introduce #smallLogo img {width: 8%;}
 	.contents #menu #specificMenu {width: 80%;}

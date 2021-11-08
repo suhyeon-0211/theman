@@ -78,7 +78,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="exitModal">닫기</button>
         <button type="button" class="btn btn-primary" id="modalTypeSaveBtn">저장</button>
       </div>
     </div>

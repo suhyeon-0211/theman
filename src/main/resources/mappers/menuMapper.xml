@@ -8,17 +8,20 @@
 			,`type`
 		FROM
 			`service_type`
+		WHERE
+			`isUse` = true
 	</select>
 	
-	<delete id="deleteMenuType">
-		DELETE
-		FROM
-			`service_type`
+	<update id="deleteMenuType">
+		UPDATE `service_type`
+		SET
+			`isUse` = false
+			,`updatedAt` = NOW()
 		WHERE
 			<foreach collection="list" item="item" separator="or">
 				`id` = #{item}
 			</foreach>
-	</delete>
+	</update>
 	
 	<insert id="insertMenuType" parameterType="java.util.List">
 		INSERT INTO `service_type`
@@ -58,21 +61,24 @@
 		INNER JOIN
 			`service_type` as b
 		ON
-			a.`typeId` = b.`id`;
+			a.`typeId` = b.`id`
+		WHERE
+			b.`isUse` = true AND a.`isUse` = true
 	</select>
 	
-	<delete id="deleteSpecificMenu">
+	<update id="deleteSpecificMenu">
 		DELETE
 		FROM
 			`service_specific`
 		WHERE
 			`id` = #{id}
-	</delete>
+	</update>
 	
 	<delete id="deleteSpecificMenuByTypeId">
-		DELETE
-		FROM
-			`service_specific`
+		UPDATE `service_specific`
+		SET
+			`isUse` = false
+			, `updatedAt` = NOW()
 		WHERE
 			<foreach collection="list" item="item" separator="or">
 				`typeId` = #{item}

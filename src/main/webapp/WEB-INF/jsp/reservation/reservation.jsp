@@ -14,7 +14,7 @@
 			<div id="date" class="font-nixgon">
 				<c:forEach items="${dateList}" var="date">
 					<c:if test="${!fn:contains(date, '화')}">
-					<button type="button" class="btn d-inline-block w-100 datePickBtn">${date}</button>
+					<button type="button" class="btn d-inline-block w-100 datePickBtn font-weight-bold">${date}</button>
 					</c:if>
 				</c:forEach>
 			</div>
@@ -26,7 +26,7 @@
 			<div class="d-flex justify-content-center font-nixgon">
 				<div id="typePick">
 					<c:forEach items="${typeList}" var="type">
-						<button type="button" class="btn d-inline-block w-100 typeBtn">${type.type}</button>
+						<button type="button" class="btn d-inline-block w-100 typeBtn font-weight-bold">${type.type}</button>
 					</c:forEach>
 				</div>
 				<div id="specificTypePick">
@@ -34,7 +34,7 @@
 						<div id="${type.type}" class="d-none">
 							<c:forEach items="${menuList}" var="menu">
 								<c:if test="${menu.type eq type.type}">
-									<button type="button" class="btn d-inline-block w-100 specificTypeBtn" data-type-name="${type.type}" data-menu-id="${menu.id}" data-menu-required-time="${menu.requiredTime}">${menu.specificType} - ${menu.requiredTime}분</button>
+									<button type="button" class="btn d-inline-block w-100 specificTypeBtn font-weight-bold" data-type-name="${type.type}" data-menu-id="${menu.id}" data-menu-required-time="${menu.requiredTime}">${menu.specificType} - ${menu.requiredTime}분</button>
 								</c:if>
 							</c:forEach>
 						</div>
@@ -56,8 +56,8 @@
 					</c:if> --%>
 					<c:if test="${empty reservationCheckListByDate}">
 						<div class="d-flex">
-							<button type="button" class="btn d-inline-block w-50 timeBtn" data-button-status="first">${fn:split(hour, '/') [0]}</button>
-							<button type="button" class="btn d-inline-block w-50 timeBtn" data-button-status="second">${fn:split(hour, '/') [1]}</button>
+							<button type="button" class="btn d-inline-block w-50 timeBtn font-weight-bold" data-button-status="first">${fn:split(hour, '/') [0]}</button>
+							<button type="button" class="btn d-inline-block w-50 timeBtn font-weight-bold" data-button-status="second">${fn:split(hour, '/') [1]}</button>
 						</div>
 					</c:if>
 				</c:forEach>
@@ -65,10 +65,13 @@
 		</div>
 	</div>
 </div>
-<div id="reservationStatusBox" class="font-nixgon text-center">
-	<span id="dateSpan"></span>
+<div id="reservationStatusBox" class="font-nixgon text-center d-flex flex-column flex-lg-row justify-content-lg-center">
+	<div id="dateSpan"></div>
+	<div id="menuSpan" class="mx-lg-3"></div>
+	<div id="timeSpan"></div>
+	<!-- <span id="dateSpan"></span>
 	<span id="menuSpan"></span>
-	<span id="timeSpan"></span>
+	<span id="timeSpan"></span> -->
 </div>
 <div class="d-flex justify-content-center mb-5">
 	<button type="button" class="btn w-100 font-nixgon" id="reservateBtn">예약하기</button>
@@ -136,7 +139,7 @@
 			let typeName = $(this).data('type-name');
 			let menuId = $(this).data('menu-id');
 			$('#reservateBtn').data('menu-id', menuId);
-			$('#menuSpan').text(typeName + ' - ' + $(this).text());
+			$('#menuSpan').text(typeName + '( ' + $(this).text() + ' )');
 			$('#hourBox').data('menu-required-time', $(this).data('menu-required-time'));
 			//$('#hourBox').find('button').css({'background-color': 'white'})
 		});

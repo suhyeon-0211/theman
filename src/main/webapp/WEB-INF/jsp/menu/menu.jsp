@@ -12,12 +12,12 @@
 					<hr>
 				<c:forEach items="${menuList}" var="menu">
 					<c:if test="${menuType.type eq menu.type}">
-					<div class="specific-menu-introduce">
-						<span class="menu-type">${menu.type}</span>(
-						<span class="menu-specific-type">${menu.specificType}</span>)
+					<div class="specific-menu-introduce font-weight-bold">
+						<span class="menu-type">${menu.type}( </span>
+						<span class="menu-specific-type">${menu.specificType} )</span>
 						-
 						<span class="menu-price">${menu.price}</span><br>
-						<span class="text-start menu-required-time">${menu.requiredTime}</span>분
+						<span class="text-start menu-required-time">${menu.requiredTime}분</span>
 					</div>
 					</c:if>
 				</c:forEach>

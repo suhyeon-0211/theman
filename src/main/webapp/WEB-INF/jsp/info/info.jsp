@@ -6,32 +6,33 @@
 			<img alt="centerLogo" src="/static/images/theman-04.svg">
 		</div>
 		<div id="reservation" class="d-flex justify-content-center mt-3">
-			<a href="/reservation" id="toReservation" class="btn text-light font-ELAND-NICE">예약하기</a>
+			<a href="/reservation" id="toReservation" class="btn text-light font-ELAND-NICE mr-2">예약하기</a>
+			<a href="/reservation/check_view" id="toReservationCheckView" class="btn text-light font-ELAND-NICE ml-2">예약확인</a>
 		</div>
 	</div>
 </div>
-<div id="introduce">
+<%-- <div id="introduce">
 	<div id="smallLogo" class="d-flex justify-content-center">
 		<img alt="smallLogo" src="/static/images/더맨-로고-8c623e.svg" class="mt-4">
 	</div>
 	<div id="text" class="d-flex justify-content-center">
 		<small>남성 컷트를 전문으로 하는 더맨 남성컷 입니다.</small>
 	</div>
-	<%-- 
+	
 	<div id="images" class="justify-content-center flex-column flex-lg-row">
 		<img src="" alt="storeImage">
 		<img src="" alt="storeImage">
 		<img src="" alt="storeImage">
 	</div>
-	--%>
-</div>
+	
+</div> --%>
 <jsp:include page="../menu/menu.jsp"></jsp:include>
 <div id="reservationStatus" class="text-center py-5">
 	<h1>주간 예약 현황</h1>
 	<small>예약 불가는 붉은 글씨로 표시됩니다.</small>
-	<div class=" justify-content-center d-lg-flex">
-		<div class="status-margin">
-			<h3 class="weekday-font">월</h3>
+	<div class="justify-content-center d-lg-flex font-weight-bold">
+			<div class="status-margin">
+				<h3 class="weekday-font">월</h3>
 				<div class="weekday p-3" id="0">
 					<span class="sharp-time">10:00</span>
 					<span>10:30</span><br>
@@ -211,6 +212,35 @@
 		</div>
 	</div>
 	<script>
+		$(document).ready(function() {
+			$.ajax({
+				type: 'get'
+				, url: '/info/select'
+				, success: function(data) {
+					if (data.result != '') {
+						console.log(data.reservationTimeStatus);
+						for (let i = 0; i < 7; i++) {
+							for (let reservationResult of data.reservationTimeStatus[i]) {
+								for (let j = 0; j < 20; j++) {
+									if ($('#' + i + ' span:eq('+ j + ')').text() == reservationResult.time) {
+										console.log($('#' + i + ' span:eq('+ j + ')').text() + "first");
+										let index = 0;
+										for (let z = 0; z < reservationResult.requiredTime; z+=30) {
+											console.log($('#' + i + ' span:eq('+ (j + index) + ')').text() + "second");
+											$('#' + i + ' span:eq('+ (j + index) + ')').css('color', '#f26457');
+											index++;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				, error: function(e) {
+					alert("로드 실패 관리자에게 문의해주세요");
+				}
+			});
+		});
 		// 지도 출력
 		var mapContainer = document.getElementById('map');
 		var options = {
@@ -235,36 +265,7 @@
 		var zoomControl = new kakao.maps.ZoomControl();
 		map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 		
-		$(document).ready(function() {
-			$.ajax({
-				type: 'get'
-				, url: '/info/select'
-				, success: function(data) {
-					if (data.result != '') {
-						console.log(data.reservationTimeStatus);
-						for (let i = 0; i < 7; i++) {
-							for (let reservationResult of data.reservationTimeStatus[i]) {
-								for (let j = 0; j < 20; j++) {
-									if ($('#' + i + ' span:eq('+ j + ')').text() == reservationResult.time) {
-										console.log($('#' + i + ' span:eq('+ j + ')').text() + "first");
-										let index = 0;
-										for (let z = 0; z < reservationResult.requiredTime; z+=30) {
-											console.log($('#' + i + ' span:eq('+ (j + index) + ')').text() + "second");
-											$('#' + i + ' span:eq('+ (j + index) + ')').css('color', '#f26457');
-											index++;
-										}
-									}
-								}
-							}
-						}
-						
-					}
-				}
-				, error: function(e) {
-					alert("로드 실패 관리자에게 문의해주세요");
-				}
-			});
-		});
+		
 	</script>
 </div>
 			
