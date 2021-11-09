@@ -22,10 +22,10 @@
 				<c:if test="${not empty reservationCheckList}">
 				<c:forEach items="${reservationCheckList}" var="reservationCheck">
 					<fmt:formatDate value="${reservationCheck.reservation.reservationDateTime}" pattern="HH:mm" var="date"/>
-					<c:if test="${reservationCheck.reservation.status eq '예약취소'}">
+					<c:if test="${reservationCheck.reservation.status ne '예약완료'}">
 						<button type="button" class="btn d-inline-block w-100 reservation-detail-btn" data-reservation-id="${reservationCheck.reservation.id}" style="background-color: gray;">${date} - ${reservationCheck.reservation.name}</button>
 					</c:if>
-					<c:if test="${reservationCheck.reservation.status ne '예약취소'}">
+					<c:if test="${reservationCheck.reservation.status eq '예약완료'}">
 						<button type="button" class="btn d-inline-block w-100 reservation-detail-btn" data-reservation-id="${reservationCheck.reservation.id}">${date} - ${reservationCheck.reservation.name}</button>
 					</c:if>
 				</c:forEach>
@@ -71,6 +71,7 @@
 						<option>예약취소</option>
 						<option>보류</option>
 						<option>노쇼</option>
+						<option>완료</option>
 					</select>
 					<button type="button" class="btn" id="submitReservationStatusBtn">적용</button>
 				</td>

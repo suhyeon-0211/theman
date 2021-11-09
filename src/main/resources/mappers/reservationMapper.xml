@@ -67,6 +67,7 @@
 		WHERE
 			`phoneNumber` = #{phoneNumber}
 			AND `reservationPassword` = #{reservationPassword}
+		ORDER BY `reservationDateTime`
 	</select>
 	
 	<select id="selectReservationListByDate" parameterType="date" resultType="com.theman.reservation.model.Reservation">
@@ -84,6 +85,7 @@
 			`reservation`
 		WHERE
 			date_format(reservationDateTime, '%y-%m-%d') = date_format(#{date}, '%y-%m-%d')
+		ORDER BY `reservationDateTime`
 	</select>
 	
 	<select id="selectReservationById" resultType="com.theman.reservation.model.Reservation">

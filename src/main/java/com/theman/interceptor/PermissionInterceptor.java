@@ -29,12 +29,15 @@ public class PermissionInterceptor implements HandlerInterceptor {
 		// URL path를 가져온다.
 		String uri = request.getRequestURI();
 		
-		if (phoneNumber == null && uri.startsWith("/reservation")) { 
+		if (phoneNumber == null && uri.equals("/reservation")) { 
 			// 만약 로그인이 되어 있지않고 + /reservation/**=> /reservation/sign_in_view 쪽으로 보낸다. 
 			response.sendRedirect("/reservation/sign_in_view"); 
 			return false; 
 		} else if (phoneNumber == null && uri.startsWith("/admin")) {
 			response.sendRedirect("/user/sign_in_view");
+			return false;
+		} else if (phoneNumber == null && uri.startsWith("/reservation/check")) {
+			response.sendRedirect("/reservation/check/sign_in_view");
 			return false;
 		}
 		

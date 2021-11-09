@@ -46,12 +46,6 @@
 			</div>
 			<div class="font-nixgon" id="hourBox">
 				<c:forEach items="${hourList}" var="hour">
-					<%-- <c:if test="${not empty reservationCheckListByDate}">
-						<c:forEach items="${reservationCheckListByDate}" var="reservationCheck">
-							<fmt:formatDate value="${reservationCheck.reservation.reservationDateTime}" pattern="HH:mm" var="date"/>
-							<c:if test="${date eq fn:split(hour, '/') [0]}"></c:if>
-						</c:forEach>
-					</c:if> --%>
 					<c:if test="${empty reservationCheckListByDate}">
 						<div class="d-flex">
 							<button type="button" class="btn d-inline-block w-50 timeBtn font-weight-bold" data-button-status="first">${fn:split(hour, '/') [0]}</button>
@@ -78,6 +72,10 @@
 <script>
 	$(document).ready(function() {
 		$('.datePickBtn').on('click', function() {
+			// 메뉴선택으로 스크롤
+			let offset = $('#menuPick').offset();
+			$('html').animate({scrollTop: offset.top}, 400);
+			
 			// 선택된 날짜, 메뉴, 시간의 배경색 초기화
 			$('#datePick').find('button').removeAttr('style');
 		    $('#menuPick').find('button').removeAttr('style');
@@ -95,8 +93,8 @@
 				, url : '/reservation/status'
 				, data : {'date' : date}
 				, success : function(data) {
-					if (data.result != '') {
-						for (let reservationResult of data.result) {
+					if (data.reservationResult != '') {
+						for (let reservationResult of data.reservationResult) {
 							for (let i = 0; i < 20; i++) {
 								if ($('#timePick button:eq('+ i + ')').text() == reservationResult.time) {
 									let index = 0;
@@ -104,6 +102,15 @@
 										$('#timePick button:eq('+ (i + index) + ')').attr('disabled', 'disabled');
 										index++;
 									}
+								}
+							}
+						}
+					}
+					if (data.todayHourList != '') {
+						for (let todayHour of data.todayHourList) {
+							for (let i = 0; i < 20; i++) {
+								if ($('#timePick button:eq('+ i + ')').text() == todayHour) {
+									$('#timePick button:eq('+ i + ')').attr('disabled', 'disabled');
 								}
 							}
 						}
@@ -132,6 +139,10 @@
 		});
 		
 		$('.specificTypeBtn').on('click', function() {
+			// 메뉴 선택시 시간으로 스크롤
+			let offset = $('#timePick').offset();
+			$('html').animate({scrollTop: offset.top}, 400);
+			
 			//선택된 메뉴, 시간 배경색 초기화
 			$('#specificTypePick').find('button').removeAttr('style');
 			$('#timePick').find('button').removeAttr('style');

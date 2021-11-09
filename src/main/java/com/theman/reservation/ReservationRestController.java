@@ -2,6 +2,7 @@ package com.theman.reservation;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -100,9 +101,16 @@ public class ReservationRestController {
 	public Map<String, Object> reservationCheck(@RequestParam("date") String date) throws ParseException {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd (EEE)");
 		Date targetDate = sdf.parse(date);
+		Date today = new Date();
+		List<String> todayHourList = new ArrayList<>();
+		if (sdf.format(targetDate).equals(sdf.format(today))) {
+			todayHourList = reservationBO.getTimeIfIsToday();
+		}
 		List<ReservationTimeStatus> reservationTimeStatusList = reservationBO.getReservationTimeStatusListByDate(targetDate);
+		
 		Map<String, Object> result = new HashMap<>();
-		result.put("result", reservationTimeStatusList);
+		result.put("reservationResult", reservationTimeStatusList);
+		result.put("todayHourList", todayHourList);
 		return result;
 	}
 }

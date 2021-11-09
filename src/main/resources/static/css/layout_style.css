@@ -82,12 +82,14 @@ header #mobile a, header #mobile span {font-size: 1rem;}
 .contents #menuPick #menuTitle h1 {color: black;}
 .contents #timePick #timeTitle {background-color: #131313;}
 .contents #timePick #timeTitle h1 {color: white;}
-.contents #reservateBtn {background-color: white; font-size: 2.5rem;}
+.contents #reservateBtn {background-color: white; font-size: 2.5rem; color: #131313;}
 .contents #reservateBtn:hover {font-weight: bold;}
 .contents #reservationStatusBox {font-size: 1.5em;}
 
-.contents #reservationCheckBox table {width: 80%;}
+.contents #reservationCheckBox table {width: 100%;}
 .contents #reservationCheckBox table th {background-color: #131313; color: white;}
+.contents #reservationBeforeCheckBox table {width: 100%;}
+.contents #reservationBeforeCheckBox table th {background-color: #131313; color: white;}
 .contents #reservationCancelBtn {background-color: white; font-size: 2.5rem;}
 .contents #reservationCancelBtn:hover {font-weight: bold;}
 
@@ -140,6 +142,7 @@ footer img {width: 20%;}
 	.contents #reservationStatusBox {font-size: 2em;}
 	
 	.contents #reservationCheckBox table {width: 50%;}
+	.contents #reservationBeforeCheckBox table {width: 50%;}
 	.contents #reservationCancelBtn {background-color: white; font-size: 2.5rem;}
 	.contents #reservationCancelBtn:hover {font-weight: bold;}
 	

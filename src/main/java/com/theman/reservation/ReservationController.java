@@ -3,6 +3,7 @@ package com.theman.reservation;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ import com.theman.menu.model.Menu;
 import com.theman.menu.model.ServiceType;
 import com.theman.reservation.bo.ReservationBO;
 import com.theman.reservation.model.ReservationCheck;
+import com.theman.reservation.model.ReservationDetail;
 
 @Controller
 public class ReservationController {
@@ -55,6 +57,8 @@ public class ReservationController {
 				dateList.add(sdf1.format(day.getTime()));
 			}
 			day.add(Calendar.DATE, 1);
+		}
+		for (int i = 0; i < 10; i++) {
 			String st1 = sdf2.format(hour.getTime());
 			hour.add(Calendar.MINUTE, 30);
 			String st2 = sdf2.format(hour.getTime());
@@ -65,8 +69,6 @@ public class ReservationController {
 		// 메뉴 리스트 가져오기
 		List<ServiceType> typeList = menuBO.getType();
 		List<Menu> menuList = menuBO.getMenu();
-		
-		// 휴무 리스트 가져오기
 		
 		model.addAttribute("dateList", dateList);
 		model.addAttribute("hourList", hourList);
@@ -81,12 +83,37 @@ public class ReservationController {
 		HttpSession session = request.getSession();
 		String phoneNumber = (String) session.getAttribute("phoneNumber");
 		String reservationPassword = (String) session.getAttribute("reservationPassword");
+		
 		List<ReservationCheck> reservationCheckList = reservationBO.getReservationCheckListByPhoneNumberAndReservationPassword(phoneNumber, reservationPassword);
+		
 		if (!CollectionUtils.isEmpty(reservationCheckList)) {
 			session.setAttribute("name", reservationCheckList.get(0).getReservation().getName());		
 		}
-		model.addAttribute("reservationCheckList", reservationCheckList);
+		
+		List<ReservationDetail> reservationDetailList = new ArrayList<>();
+		
+		List<ReservationDetail> reservationDetailBeforeList = new ArrayList<>();
+		
+		Date today = new Date();
+		
+		for (ReservationCheck reservationCheck : reservationCheckList) {
+			if (reservationCheck.getReservation().getReservationDateTime().after(today)) {
+				reservationDetailList.add(reservationBO.getReservationDetailById(reservationCheck.getReservation().getId()));
+			} else {
+				reservationDetailBeforeList.add(reservationBO.getReservationDetailById(reservationCheck.getReservation().getId()));
+			}
+		}
+		
+		
+		model.addAttribute("reservationDetailList", reservationDetailList);
+		model.addAttribute("reservationDetailBeforeList", reservationDetailBeforeList);
 		model.addAttribute("viewName", "reservation/reservation_check");
+		return "template/layout";
+	}
+	
+	@RequestMapping("/reservation/check/sign_in_view")
+	public String reservationCheckSignInView(Model model) {
+		model.addAttribute("viewName", "reservation/reservation_check_sign_in");
 		return "template/layout";
 	}
 	

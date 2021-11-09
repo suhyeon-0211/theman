@@ -34,6 +34,7 @@ public class UserRestController {
 			result.put("result", "success");
 			session.setAttribute("name", "admin");
 			session.setAttribute("phoneNumber", "0000");
+			session.setAttribute("reservationPassword", "0000");
 		}
 		
 		return result;
