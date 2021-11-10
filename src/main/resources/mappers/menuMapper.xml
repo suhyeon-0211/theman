@@ -67,14 +67,15 @@
 	</select>
 	
 	<update id="deleteSpecificMenu">
-		DELETE
-		FROM
-			`service_specific`
+		UPDATE `service_specific`
+		SET
+			`isUse` = false
+			, `updatedAt` = NOW()
 		WHERE
 			`id` = #{id}
 	</update>
 	
-	<delete id="deleteSpecificMenuByTypeId">
+	<update id="deleteSpecificMenuByTypeId">
 		UPDATE `service_specific`
 		SET
 			`isUse` = false
@@ -83,7 +84,7 @@
 			<foreach collection="list" item="item" separator="or">
 				`typeId` = #{item}
 			</foreach>
-	</delete>
+	</update>
 	
 	<update id="updateSpecificMenu" parameterType="map">
 		UPDATE `service_specific`

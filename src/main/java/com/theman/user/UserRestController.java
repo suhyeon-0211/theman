@@ -21,6 +21,13 @@ public class UserRestController {
 	@Autowired
 	private AdminBO adminBO;
 	
+	/**
+	 * 로그인
+	 * @param loginId
+	 * @param password
+	 * @param request
+	 * @return
+	 */
 	@PostMapping("/sign_in")
 	public Map<String, Object> signIn(
 			@RequestParam("loginId") String loginId,

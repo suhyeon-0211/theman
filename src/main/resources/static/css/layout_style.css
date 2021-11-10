@@ -51,7 +51,7 @@ header #mobile a, header #mobile span {font-size: 1rem;}
 .contents #reservationStatus .sharp-time {margin-right: 5px;}
 .contents #reservationStatus small {font-family: "nixgon"; color: #f26457; font-size: 1.5rem}
 .contents #direction {background-color: #131313; padding-top: 3%;}
-.contents #direction #map {width: 300px; height: 300px; display: none;}
+.contents #direction #map {width: 70%; height: 50%; justify-content: center; display: none;}
 .contents #direction #introductionOfStore {color: #f2e8d5;}
 .contents #direction #introductionOfStore .introduction-margin {margin-top: 10%; font-size: 1.5rem;}
 .contents #direction #introductionOfStore #wayToStore {margin-right: 5%;}

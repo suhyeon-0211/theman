@@ -25,6 +25,11 @@ public class AdminRestController {
 	@Autowired
 	private AdminBO adminBO;
 	
+	/**
+	 * 메뉴중 큰 타입 업데이트
+	 * @param menuList
+	 * @return
+	 */
 	@PostMapping("/menu_type_update")
 	public Map<String, Object> menuTypeUpdate(
 			@RequestParam("menuList[]") List<String> menuList) {
@@ -37,6 +42,14 @@ public class AdminRestController {
 		return result;
 	}
 	
+	/**
+	 * 메뉴 추가(단일)
+	 * @param typeId
+	 * @param specificType
+	 * @param price
+	 * @param requiredTime
+	 * @return
+	 */
 	@PostMapping("/menu_insert")
 	public Map<String, Object> menuInsert(
 			@RequestParam("typeId") int typeId,
@@ -51,6 +64,11 @@ public class AdminRestController {
 		return result;
 	}
 	
+	/**
+	 * 메뉴 삭제(단일)
+	 * @param id
+	 * @return
+	 */
 	@PostMapping("/menu_delete")
 	public Map<String, Object> menuDelete(
 			@RequestParam("menuId") int id) {
@@ -62,6 +80,15 @@ public class AdminRestController {
 		return result;
 	}
 	
+	/**
+	 * 메뉴 디테일 업데이트
+	 * @param id
+	 * @param typeId
+	 * @param specificType
+	 * @param price
+	 * @param requiredTime
+	 * @return
+	 */
 	@PostMapping("/menu_update")
 	public Map<String, Object> menuUpdate(
 			@RequestParam("menuId") int id,
@@ -77,11 +104,20 @@ public class AdminRestController {
 		return result;
 	}
 	
+	/**
+	 * 휴무 조회
+	 * @return
+	 */
 	@PostMapping("/holiday/select")
 	public List<CalendarVO> selectHolidayList() {
 		return adminBO.getHolidayList();
 	}
 	
+	/**
+	 * 휴무 
+	 * @param targetDate
+	 * @return
+	 */
 	@PostMapping("/holiday/update")
 	public Map<String, Object> holidayUpdate(@RequestParam("date") Date targetDate) {
 		
@@ -93,6 +129,11 @@ public class AdminRestController {
 		return result;
 	}
 	
+	/**
+	 * 예약된 사람 클리시 자세한 정보
+	 * @param id
+	 * @return
+	 */
 	@PostMapping("/reservation_detail")
 	public Map<String, Object> getReservationDetail(
 			@RequestParam("reservationId") int id) {
@@ -103,6 +144,13 @@ public class AdminRestController {
 		return result;
 	}
 	
+	/**
+	 * 예약 상태 변경
+	 * @param id
+	 * @param status
+	 * @param request
+	 * @return
+	 */
 	@PostMapping("/reservation_update") 
 	public Map<String, Object> updateReservation(
 			@RequestParam("reservationId") int id,

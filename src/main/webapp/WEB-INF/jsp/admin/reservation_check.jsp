@@ -11,7 +11,7 @@
 				<h1 class="text-center font-ELAND-NICE">날짜</h1>
 			</div>
 			<div id="date" class="font-nixgon">
-				<input type="text" class="form-control" id="datepicker">
+				<input type="text" class="form-control font-weight-bold" id="datepicker" value="${pickDate}">
 			</div>
 		</div>
 		<div id="detailPick" class="mx-2">

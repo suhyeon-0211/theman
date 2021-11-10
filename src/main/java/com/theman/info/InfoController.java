@@ -17,6 +17,11 @@ public class InfoController {
 	@Autowired
 	private MenuBO menuBO;
 	
+	/**
+	 * 메인 info화면
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/info")
 	public String info(Model model) {
 		List<ServiceType> menuTypeList = menuBO.getType();

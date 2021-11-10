@@ -17,6 +17,11 @@ public class MenuController {
 	@Autowired
 	private MenuBO menuBO;
 	
+	/**
+	 * 메뉴
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/menu")
 	public String menu(Model model) {
 		List<ServiceType> menuTypeList = menuBO.getType();

@@ -17,6 +17,10 @@ public class InfoRestController {
 	@Autowired
 	private ReservationBO reservationBO;
 	
+	/**
+	 * info 화면 - 예약현황 조회
+	 * @return
+	 */
 	@RequestMapping("/info/select")
 	public Map<String, Object> ReservationTimeStatusSelect() {
 		Map<String, Object> result = new HashMap<>();

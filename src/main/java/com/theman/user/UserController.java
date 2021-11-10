@@ -11,12 +11,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class UserController {
 
+	/**
+	 * 로그인화면
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/sign_in_view")
 	public String userSignInView(Model model) {
 		model.addAttribute("viewName", "user/sign_in");
 		return "template/layout_sign";
 	}
 	
+	/**
+	 * 로그아웃
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("/sign_out")
 	public String signOut(HttpServletRequest request) {
 		HttpSession session = request.getSession();

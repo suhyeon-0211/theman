@@ -35,12 +35,22 @@ public class ReservationController {
 	@Autowired
 	private HolidayBO holidayBO;
 	
+	/**
+	 * 예약화면 비회원 로그인
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/reservation/sign_in_view")
 	public String reservationSignInView(Model model) {
 		model.addAttribute("viewName", "reservation/reservation_sign_in");
 		return "template/layout";
 	}
 	
+	/**
+	 * 예약화면으로 이동 및 날짜 시간 리스트 뿌리기
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/reservation")
 	public String reservation(Model model) {
 		// 오늘부터 앞으로 10일까지의 날짜 리스트에 담는다.
@@ -78,6 +88,12 @@ public class ReservationController {
 		return "template/layout";
 	}
 	
+	/**
+	 * 예약확인 화면
+	 * @param model
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("/reservation/check_view")
 	public String reservationCheckView(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -111,6 +127,11 @@ public class ReservationController {
 		return "template/layout";
 	}
 	
+	/**
+	 * 예약확인 화면 비회원 로그인
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/reservation/check/sign_in_view")
 	public String reservationCheckSignInView(Model model) {
 		model.addAttribute("viewName", "reservation/reservation_check_sign_in");

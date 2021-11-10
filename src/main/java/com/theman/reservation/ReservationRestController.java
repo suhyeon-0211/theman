@@ -28,6 +28,15 @@ public class ReservationRestController {
 	@Autowired
 	private ReservationBO reservationBO;
 	
+	/**
+	 * 예약하기
+	 * @param date
+	 * @param menuId
+	 * @param time
+	 * @param request
+	 * @return
+	 * @throws ParseException
+	 */
 	@PostMapping("/create")
 	public Map<String, Object> reservationCreate(
 			@RequestParam("date") String date,
@@ -54,6 +63,12 @@ public class ReservationRestController {
 		return result;
 	}
 	
+	/**
+	 * 예약취소
+	 * @param reservationId
+	 * @param request
+	 * @return
+	 */
 	@PutMapping("/update")
 	public Map<String, Object> reservationUpdate(@RequestParam("reservationId") int reservationId, HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -66,6 +81,14 @@ public class ReservationRestController {
 		return result;
 	}
 	
+	/**
+	 * 예약하기 화면 비회원 로그인
+	 * @param name
+	 * @param phoneNumber
+	 * @param reservationPassword
+	 * @param request
+	 * @return
+	 */
 	@PostMapping("/sign_in")
 	public Map<String, Object> reservationSignIn(
 			@RequestParam("name") String name,
@@ -83,6 +106,13 @@ public class ReservationRestController {
 		return result;
 	}
 	
+	/**
+	 * 예약확인화면 비회원 로그인
+	 * @param phoneNumber
+	 * @param reservationPassword
+	 * @param request
+	 * @return
+	 */
 	@PostMapping("/check")
 	public Map<String, Object> reservationCheck(
 			@RequestParam("phoneNumber") String phoneNumber,
@@ -97,6 +127,12 @@ public class ReservationRestController {
 		return result;
 	}
 	
+	/**
+	 * 예약현황 가져오기
+	 * @param date
+	 * @return
+	 * @throws ParseException
+	 */
 	@PostMapping("/status")
 	public Map<String, Object> reservationCheck(@RequestParam("date") String date) throws ParseException {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd (EEE)");
