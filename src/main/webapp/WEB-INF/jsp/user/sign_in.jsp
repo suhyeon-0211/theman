@@ -10,7 +10,7 @@
 				<input type="password" id="password" class="form-control" placeholder="비밀번호">
 			</div>
 			<button type="button" class="btn w-100 mt-3" id="signInBtn">로그인</button>
-			<button type="button" class="btn w-100 mt-3" id="signUpBtn">회원가입</button>
+			<button type="button" class="btn w-100 mt-3 d-none" id="signUpBtn">회원가입</button>
 		</div>
 	</div>
 </div>
