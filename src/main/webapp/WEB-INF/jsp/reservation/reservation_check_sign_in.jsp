@@ -38,7 +38,7 @@
 					if (data.result == 'success') {
 						location.href="/reservation/check_view";
 					} else {
-						alert("예약확인에 실패했습니다. 다시 시도해주세요");
+						alert("예약 정보가 없습니다.");
 					}
 				}
 				, error : function(e) {

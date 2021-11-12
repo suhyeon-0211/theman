@@ -19,6 +19,9 @@ public interface ReservationDAO {
 	public void updateReservationStatusById(
 			@Param("id") int id,
 			@Param("status") String status);
+	public boolean existReservationInfo(
+			@Param("phoneNumber") String phoneNumber,
+			@Param("reservationPassword") String reservationPassword);
 	public void insertReservationCancelLog(
 			@Param("id") int id,
 			@Param("isAdmin") boolean isAdmin);
