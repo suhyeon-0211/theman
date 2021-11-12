@@ -42,6 +42,11 @@ public class ReservationBO {
 			reservationDAO.insertReservationCancelLog(reservationId, isAdmin);
 		}
 	}
+	
+	public boolean existReservationInfo(String phoneNumber, String reservationPassword) {
+		return reservationDAO.existReservationInfo(phoneNumber, reservationPassword);
+	}
+	
 	public List<ReservationCheck> getReservationCheckListByPhoneNumberAndReservationPassword(String phoneNumber, String reservationPassword) {
 		List<Reservation> reservationList = reservationDAO.selectReservationListByPhoneNumberAndReservationPassword(phoneNumber, reservationPassword);
 		List<ReservationCheck> reservationCheckList = new ArrayList<>();

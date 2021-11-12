@@ -118,12 +118,19 @@ public class ReservationRestController {
 			@RequestParam("phoneNumber") String phoneNumber,
 			@RequestParam("reservationPassword") String reservationPassword,
 			HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		session.setAttribute("phoneNumber", phoneNumber);
-		session.setAttribute("reservationPassword", reservationPassword);
-		
+
 		Map<String, Object> result = new HashMap<>();
-		result.put("result", "success");
+
+		// 해당하는 예약정보가 있는지 확인
+		if (reservationBO.existReservationInfo(phoneNumber, reservationPassword)) {
+			HttpSession session = request.getSession();
+			session.setAttribute("phoneNumber", phoneNumber);
+			session.setAttribute("reservationPassword", reservationPassword);
+			result.put("result", "success");
+		} else {
+			result.put("result", "false");
+		}
+		
 		return result;
 	}
 	

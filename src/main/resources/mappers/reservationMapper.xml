@@ -36,6 +36,16 @@
 			`id` = #{id}
 	</update>
 	
+	<select id="existReservationInfo" parameterType="map" resultType="boolean">
+		SELECT
+			COUNT(1)
+		FROM
+			`reservation`
+		WHERE
+			`phoneNumber` = #{phoneNumber}
+			AND `reservationPassword` = #{reservationPassword}
+	</select>
+	
 	<insert id="insertReservationCancelLog">
 		INSERT INTO `reservation_cancel_log`
 		(
