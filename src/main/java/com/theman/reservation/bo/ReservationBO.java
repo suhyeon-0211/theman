@@ -142,17 +142,22 @@ public class ReservationBO {
 	
 	public List<String> getTimeIfIsToday() {
 		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		
 		Date today = new Date();
 		
 		Calendar todayCal = Calendar.getInstance();
-		todayCal.set(Calendar.HOUR, 550);
+		todayCal.set(Calendar.HOUR, -2);
 		todayCal.set(Calendar.MINUTE, 0);
 		
 		List<String> todayHourList = new ArrayList<>();
 		
 		for (int i = 0; i < 20; i++) {
-			if (today.before(todayCal.getTime())) {
+			/*
+			 * if (today.before(todayCal.getTime())) {
+			 * todayHourList.add(sdf.format(todayCal.getTime())); }
+			 */
+			if (todayCal.getTime().before(today)) {
 				todayHourList.add(sdf.format(todayCal.getTime()));
 			} else {
 				break;

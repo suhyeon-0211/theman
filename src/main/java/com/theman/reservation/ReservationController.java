@@ -60,7 +60,7 @@ public class ReservationController {
 		SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm");
 		Calendar day = Calendar.getInstance();
 		Calendar hour = Calendar.getInstance();
-		hour.set(Calendar.HOUR, 550);
+		hour.set(Calendar.HOUR, -2);
 		hour.set(Calendar.MINUTE, 0);
 		for (int i = 0; i < 15; i++) {
 			if (!holidayBO.existHolidayByCloseDate(day.getTime())) {
