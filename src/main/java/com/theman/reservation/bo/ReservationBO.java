@@ -129,7 +129,11 @@ public class ReservationBO {
 	
 	public Map<Integer, List<ReservationTimeStatus>> getReservationCheckListByThisWeek() {
 		Calendar calendar = Calendar.getInstance();
-		calendar.add(Calendar.DATE, 2-calendar.get(Calendar.DAY_OF_WEEK));
+		if (calendar.get(Calendar.DAY_OF_WEEK) == 1) {
+			calendar.add(Calendar.DATE, -6);
+		} else {
+			calendar.add(Calendar.DATE, 2-calendar.get(Calendar.DAY_OF_WEEK));
+		}
 		Map<Integer, List<ReservationTimeStatus>> reservationTimeStatusMap = new HashMap<>();
 		for(int i = 0; i < 7; i++) {
 			Date targetDate = calendar.getTime();
